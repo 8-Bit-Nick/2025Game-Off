@@ -1,0 +1,10 @@
+// Basic Stats
+max_hp = 35;
+hp = max_hp;
+base_spd = 0.5;
+spd = base_spd;
+dmg = 5;
+target = o_Tower;
+hurt_timer = 0;
+xp_value = 5;
+blind_timer = 0;
