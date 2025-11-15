@@ -3,7 +3,7 @@
 //Converts seconds to frames
 global.FPS = max(1, game_get_speed(gamespeed_fps));
 
-//Frame coun
+//Frame count
 if (!variable_global_exists("FRAME")) {
     global.FRAME = 0;
 }
@@ -22,21 +22,9 @@ if (!layer_exists("LightFX")) {
 // === XP / Leveling ===
 global.level     = 1;
 global.xp        = 0;
-global.xp_next   = 30;  // XP needed for next level (grows over time)
+global.xp_next   = 40;  // XP needed for next level (grows over time)
 global.leveling  = false;  // when true, show upgrade picker & pause 
 
 
 
-//create cone and attach
-var cone  = instance_create_layer(o_Tower.x,o_Tower.y,"LightFX",o_Lightcone);
-cone.owner = o_Tower
 
-//Temp Enemy Spawn
-var count = 4;
-var radius = 600;
-for (var i = 0; i < count; i++){
-    var ang = i * (140 /count);
-    var sx = g_tower_pos.x + lengthdir_x(radius, ang);
-    var sy = g_tower_pos.y + lengthdir_y(radius, ang);
-    instance_create_layer(sx, sy, "Instances",o_enemyTank)
-}

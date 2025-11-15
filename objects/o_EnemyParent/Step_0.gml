@@ -15,7 +15,7 @@ spd = base_spd * mult;
 
 //Move to Tower
 if (instance_exists(target)){
-    var dir = point_direction(x, y, target.x, target.y);
+    var dir = point_direction(x, y, target.x, target.y-63);
     x += lengthdir_x(spd,dir);
     y += lengthdir_y(spd,dir);
 }
@@ -23,6 +23,8 @@ if (instance_exists(target)){
 if (hurt_timer > 0) hurt_timer -=1;
     
 if (hp <= 0) {
-    scr_xp_add(xp_value);
-    instance_destroy();
+    if (script_exists(scr_xp_add)){
+        scr_xp_add(xp_value); // Set by spawner
+    }
+    instance_destroy()
 }
