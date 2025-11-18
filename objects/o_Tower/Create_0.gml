@@ -1,6 +1,6 @@
 //Core Stats
-max_hp = 100;
-hp = 100;
+max_hp = 200;
+hp = max_hp;
 attack_speed = 1.0;
 
 //image scaling
@@ -15,8 +15,8 @@ cd_active2 = 0.0;
 
 
 //placeholder
-body_w = 70;
-body_h = 180;
+body_w = 84;
+body_h = 175;
 
 //Cone base(auto aim)
 con_dir = 0;

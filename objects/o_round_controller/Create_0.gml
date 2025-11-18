@@ -11,7 +11,7 @@ state = "running";
 //    Fields: { obj, base interval (sec), variance (sec), burst_min, burst_max, base_hp, base_spd, base_xp }
 enemy_types = [
     // Tank: slower, tougher baseline trickle
-    { obj:o_enemyTank,  base:7, variance:2, burst_min:1, burst_max:2, hp:50, spd:0.33, xp:8 },
+    { obj:o_enemyTank,  base:7, variance:2, burst_min:1, burst_max:2, hp:70, spd:0.33, xp:8 },
 
     // Fast: quicker cadence, smaller bursts, lower HP but more pressure
     { obj:o_enemyFast,  base:4, variance:1.25, burst_min:1, burst_max:3, hp:30, spd:.5, xp:4 }

@@ -1,3 +1,8 @@
+//Level up pause
+if (variable_global_exists("leveling") && global.leveling){
+    exit;
+}
+
 //Status - Tick
 if (blind_timer > 0){
     blind_timer -= 1;

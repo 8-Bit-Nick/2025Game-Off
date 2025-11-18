@@ -1,3 +1,16 @@
+#region Level-Up Pause/resume (Upgrade Picker)
+//pause everything if level up happens
+if(state == "running" && global.leveling){
+    state = "levelup_pause";
+    exit;
+}
+// resume game if player has chosen
+if (state == "levelup_pause" && !global.leveling){
+    state = "running";
+    exit;
+}
+#endregion
+
 if (state != "running") exit;
 
 // Countdown the round (in frames)

@@ -1,3 +1,7 @@
+if (variable_global_exists("leveling") && global.leveling){
+    exit;
+}
+
 // Follow the mouse in ROOM space
 x = mouse_x;
 y = mouse_y;

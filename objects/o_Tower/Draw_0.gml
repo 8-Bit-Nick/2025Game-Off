@@ -7,10 +7,10 @@ var top    = y - body_h * 0.5;
 var bottom = y + body_h * 0.5;
 
 // small HP bar above the tower
-var bar_w = body_w + 8;
+var bar_w = body_w + 6;
 var bar_h = 6;
 var bar_x = x - bar_w * 0.5;
-var bar_y = top - 10;
+var bar_y = top - 82;
 
 
 var hp_ratio = clamp(hp / max_hp, 0, 1);
