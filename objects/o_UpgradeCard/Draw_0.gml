@@ -17,15 +17,26 @@ if (icon_sprite != noone) {
    var icon_y = top_y1 + 16; // a little down from the top edge 
     draw_sprite(icon_sprite, 0, icon_x, icon_y);
 }
+// Rarity color by tier: 0=Common, 1=Rare, 2=Epic
+var rarity_col = c_white;
+switch (tier_index) {
+    case 0: rarity_col = c_dkgray; break;
+    case 1: rarity_col = make_color_rgb(70,140,255);  break; // Rare (blue)
+    case 2: rarity_col = make_color_rgb(180,110,255); break; // Epic (purple)
+}
+
 
 // Title centered under the icon
+draw_set_font(fnt_card_title)
 draw_set_halign(fa_center);
 draw_set_valign(fa_middle);
-draw_set_color(c_black);
+draw_set_color(rarity_col);
 var title_y = top_y1 + 48 + 10; // icon height + spacing
-draw_text(icon_x, title_y, title_text);
+draw_set_color(c_black); draw_text(icon_x+1, title_y+1, title_text);
+draw_set_color(rarity_col); draw_text(icon_x, title_y, title_text);
 
 // Description inside bottom panel with wrapping & small padding
+draw_set_font(fnt_card_desc)
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
 var pad = 6;
@@ -36,6 +47,6 @@ draw_text_ext(bot_x1 + pad, bot_y1 + pad, desc_text, -1, wrap_w);
 if (key_hint != "") {
     draw_set_halign(fa_right);
     draw_set_valign(fa_bottom);
-    draw_set_color(make_color_rgb(220,220,220));
+    draw_set_color(c_black);
     draw_text(x + card_w * 0.5 - 6, y + card_h * 0.5 - 6, key_hint);
 }

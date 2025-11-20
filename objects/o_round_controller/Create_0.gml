@@ -1,8 +1,18 @@
 frames_per_second = variable_global_exists("FPS") ? max(1, global.FPS) : 60;
 
 // Round length
-round_length_seconds = 180; // 3 minutes to start (tweak later)
+round_length_seconds = 500; // 3 minutes to start (tweak later)
 round_timer_frames  = round_length_seconds * frames_per_second; // counts DOWN
+elapsed_frames = 0;
+
+// Per 10s drip score
+frames_per_second = (variable_instance_exists(id,"frames_per_second") && frames_per_second > 0) ? frames_per_second : 60;
+time_drip_interval_frames = 10 * frames_per_second;
+time_drip_next_frame      = time_drip_interval_frames; // first award at 10s
+
+//Per Time Bonus
+next_bonus_minute = 1;
+if (!variable_global_exists("points")) global.points = 0;
 
 // 3) Basic state machine
 state = "running"; 
@@ -11,10 +21,10 @@ state = "running";
 //    Fields: { obj, base interval (sec), variance (sec), burst_min, burst_max, base_hp, base_spd, base_xp }
 enemy_types = [
     // Tank: slower, tougher baseline trickle
-    { obj:o_enemyTank,  base:7, variance:2, burst_min:1, burst_max:2, hp:70, spd:0.33, xp:8 },
+    { obj:o_enemyTank,  base:8.2, variance:.75, burst_min:1, burst_max:2, hp:45, spd:0.22, xp:8, points:10},
 
     // Fast: quicker cadence, smaller bursts, lower HP but more pressure
-    { obj:o_enemyFast,  base:4, variance:1.25, burst_min:1, burst_max:3, hp:30, spd:.5, xp:4 }
+    { obj:o_enemyFast,  base:5.25, variance:.85, burst_min:1, burst_max:3, hp:22, spd:.38, xp:5, points:3}
 
     // Ranged:
 ];

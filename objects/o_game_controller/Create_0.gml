@@ -22,8 +22,9 @@ if (!layer_exists("LightFX")) {
 // === XP / Leveling ===
 global.level     = 1;
 global.xp        = 0;
-global.xp_next   = 1;  // XP needed for next level (grows over time)
+global.xp_next   = 25;  // XP needed for next level (grows over time)
 global.leveling  = false;  // when true, show upgrade picker & pause 
+global.points = 0;
 
 
 

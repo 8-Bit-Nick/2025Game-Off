@@ -1,7 +1,7 @@
 //Core Stats
 max_hp = 200;
 hp = max_hp;
-attack_speed = 1.0;
+attack_speed = .85;
 
 //image scaling
 

@@ -1,6 +1,6 @@
 //Base Stats
 radius_px = 20;
-dps = 18;
+dps = 16;
 
 
 //Sprite Stuff

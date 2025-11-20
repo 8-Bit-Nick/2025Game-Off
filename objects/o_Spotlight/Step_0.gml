@@ -6,7 +6,7 @@ if (variable_global_exists("leveling") && global.leveling){
 x = mouse_x;
 y = mouse_y;
 
-// Convert DPS → per-frame damage using your configured FPS
+// Convert DPS 
 var fps_local = variable_global_exists("FPS") ? max(1, global.FPS) : 60;
 
 

@@ -28,8 +28,7 @@ if (instance_exists(target)){
 if (hurt_timer > 0) hurt_timer -=1;
     
 if (hp <= 0) {
-    if (script_exists(scr_xp_add)){
-        scr_xp_add(xp_value); // Set by spawner
-    }
+    scr_xp_add(xp_value);// Set by spawner
+    scr_add_Highscore(points);// set by spawner
     instance_destroy()
 }

@@ -87,3 +87,67 @@ if (state == "show" && array_length(cards) == 0) {
         array_push(cards, c);
     }
 }
+//Show State Input/Choose Card
+//handle input (click or 1/2/3)
+var picked = noone;
+if (state == "show" && array_length(cards) > 0) {
+    
+//
+    //// Number keys (1 / 2 / 3)
+    //if (keyboard_check_pressed(vk_1) && array_length(cards) >= 1) picked = cards[0];
+    //if (keyboard_check_pressed(vk_2) && array_length(cards) >= 2) picked = cards[1];
+    //if (keyboard_check_pressed(vk_3) && array_length(cards) >= 3) picked = cards[2];
+
+    // 2Mouse click (cards are drawn in ROOM space, so use mouse_x/mouse_y)
+    if (picked == noone && mouse_check_button_pressed(mb_left)) {
+        var mx = mouse_x;
+        var my = mouse_y;
+        for (var i = 0; i < array_length(cards); i++) {
+            var c = cards[i];
+            var left   = c.x - c.card_w * 0.5;
+            var right  = c.x + c.card_w * 0.5;
+            var top    = c.y - c.card_h * 0.5;
+            var bottom = c.y + c.card_h * 0.5;
+            if (mx >= left && mx <= right && my >= top && my <= bottom) { picked = c; break; }
+        }
+    }
+
+    // 3) If something was picked, stash choice and begin fade-out
+    if (picked != noone) {
+        chosen_id   = picked.upgrade_id;   // string id like "bb","wl","fb","dz","sch","fc"
+        chosen_tier = picked.tier_index;   // 0,1,2
+
+        // destroy the three card instances
+        for (var j = 0; j < array_length(cards); j++) {
+            if (instance_exists(cards[j])) instance_destroy(cards[j]);
+        }
+        cards = [];
+
+        // transition to fade-out; the fade-out block will call scr_upgrades_apply(...)
+        state      = "fade_out";
+        fade_speed = 2.0;
+    }
+}
+// Fade out
+if (state == "fade_out") {
+    fade_alpha = max(0, fade_alpha - (fade_speed / fps_local));
+
+    if (fade_alpha <= 0) {
+        // Apply the selected upgrade (if any)
+        if (is_string(chosen_id) && chosen_id != "") {
+            scr_upgrades_apply(chosen_id, chosen_tier);
+        }
+
+        // Restore spotlight + custom cursor
+        if (instance_exists(spotlight)) spotlight.visible = true;
+        window_set_cursor(cr_none);
+
+        // Clear temp UI state
+        chosen_id   = "";
+        chosen_tier = -1;
+
+        // Close the level-up flow and resume gameplay
+        global.leveling = false;
+        state = "idle";
+    }
+}

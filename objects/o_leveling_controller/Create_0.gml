@@ -19,7 +19,7 @@ if (!layer_exists(ui_layer_name)) {
 } else {
     layer_id = layer_get_id(ui_layer_name);
 }
-depth = 10000;
+depth = 100;
 
 // Card placement
 CARD_W = 194;
