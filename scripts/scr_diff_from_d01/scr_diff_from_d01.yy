@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_in_cone",
+  "%Name":"scr_diff_from_d01",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_in_cone",
+  "name":"scr_diff_from_d01",
   "parent":{
-    "name":"Scripts",
-    "path":"folders/Scripts.yy",
+    "name":"Enemy",
+    "path":"folders/Scripts/Enemy.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

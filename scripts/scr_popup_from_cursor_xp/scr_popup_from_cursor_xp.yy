@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_get_spawn",
+  "%Name":"scr_popup_from_cursor_xp",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_get_spawn",
+  "name":"scr_popup_from_cursor_xp",
   "parent":{
-    "name":"Enemy",
-    "path":"folders/Scripts/Enemy.yy",
+    "name":"UI",
+    "path":"folders/Scripts/UI.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

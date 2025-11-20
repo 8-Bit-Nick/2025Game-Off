@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_xp_add",
+  "%Name":"scr_popup_from_cursor_points",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_xp_add",
+  "name":"scr_popup_from_cursor_points",
   "parent":{
-    "name":"Gameplay",
-    "path":"folders/Scripts/Gameplay.yy",
+    "name":"UI",
+    "path":"folders/Scripts/UI.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

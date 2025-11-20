@@ -30,5 +30,7 @@ if (hurt_timer > 0) hurt_timer -=1;
 if (hp <= 0) {
     scr_xp_add(xp_value);// Set by spawner
     scr_add_Highscore(points);// set by spawner
-    instance_destroy()
+    scr_popup_from_cursor_xp(xp_value);
+    scr_popup_from_cursor_points(points);
+    instance_destroy();
 }

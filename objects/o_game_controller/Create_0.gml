@@ -27,5 +27,6 @@ global.leveling  = false;  // when true, show upgrade picker & pause
 global.points = 0;
 
 
-
+// Purpose: hold and manage temporary UI popups (xp/points near cursor)
+popups = [];   // each popup will be a small struct we push here
 

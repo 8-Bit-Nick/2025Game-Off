@@ -13,14 +13,35 @@ if (state == "levelup_pause" && !global.leveling){
 
 if (state != "running") exit;
 
-// Countdown the round (in frames)
-if (round_timer_frames > 0) {
-    round_timer_frames -= 1;
-}
+if (state == "running") {
+    // Count up elapsed time (frames)
+    elapsed_frames += 1;
+// FPS fallback
+    var fps_local = (variable_instance_exists(id, "frames_per_second") && frames_per_second > 0) ? frames_per_second : 60;
+    
+    //Difficulty
+    difficulty_01 = clamp(elapsed_frames / (fps_local * 360), 0, 2);
+    // Time-based multipliers for this frame
+    var dif = scr_diff_from_d01(difficulty_01);
+    
 
-// Compute difficulty from 0 → 1 across the round
-var total_frames = round_length_seconds * frames_per_second;
-difficulty_01 = 1 - (round_timer_frames / max(1, total_frames)); // 0 at start, 1 at end
+
+    // Drip score: +15 points every 30 seconds
+    if (elapsed_frames >= time_drip_next_frame) {
+        // Catch-up friendly (in case of frame skips): award all missed ticks
+        var awards = floor((elapsed_frames - time_drip_next_frame) / time_drip_interval_frames) + 1;
+        global.points += 15 * awards;
+        time_drip_next_frame += awards * time_drip_interval_frames;
+    }
+
+    // Minute milestones: +50 at 1:00, +100 at 2:00, +200 at 3:00, +400 at 4:00, ...
+    var minutes_elapsed = floor(elapsed_frames / (fps_local * 60));
+    while (next_bonus_minute <= minutes_elapsed) {
+        var award = 50 * power(2, next_bonus_minute - 1);
+        global.points += award;
+        next_bonus_minute += 1;
+    }
+
 
 // Dont Spawn if over Limit
 if (instance_number(o_EnemyParent) >= max_on_field) exit;
@@ -34,8 +55,7 @@ if (spawn_cd[0] <= 0) {
     var T = enemy_types[0];
 
     // Burst size
-    var burst_growth = floor(difficulty_01 * 1.25); // +0 → +2 by end
-    var burst = irandom_range(T.burst_min, T.burst_max + burst_growth);
+    var burst = irandom_range(T.burst_min, T.burst_max + dif.burst_tank);
 
     for (var k = 0; k < burst; k++) {
         if (instance_number(o_EnemyParent) >= max_on_field) break;
@@ -46,15 +66,12 @@ if (spawn_cd[0] <= 0) {
         // Create enemy
         var e = instance_create_layer(p.x, p.y, "Enemies", T.obj);
 
-        // --- Apply gentle stat scaling over time ---
-        // HP: up to +% by end
-        var hp_scaled  = round(T.hp  * (1 + 0.75 * difficulty_01));
-        // SPD: up +% by end
-        var spd_scaled =        T.spd * (1 + 0.15 * difficulty_01);
-        // XP: up +% by end
-        var xp_scaled  = round(T.xp  * (1 + 1.25 * difficulty_01));
-        // points: up +% by end
-        var pt_scaled = round(T.points * (1 + 2.25 * difficulty_01));
+        // --- Apply gentle stat scaling over time --- 
+        var hp_scaled  = round(T.hp  * dif.hp_mult);
+        var spd_scaled =        T.spd * dif.spd_mult_t;
+        var xp_scaled  = round(T.xp  * dif.xp_mult);
+        var pt_scaled = round(T.points * (1 + 2.25 *difficulty_01))
+
 
         with (e) {
             max_hp   = hp_scaled; hp = max_hp;
@@ -64,11 +81,11 @@ if (spawn_cd[0] <= 0) {
         }
     }
 
-    // Reset tank timer:
+    // next spawn cd
     var next_seconds = T.base + random_range(-T.variance, T.variance);
-    var cadence_mult = lerp(1.0, 0.6, difficulty_01);
-    spawn_cd[0] = max(10, round(next_seconds * cadence_mult * frames_per_second));
+    spawn_cd[0] = max(10, round(next_seconds * dif.cadence_tank * frames_per_second));
 }
+    
 #endregion
 #region Fast Enemy
 // Fast Weak Spawn
@@ -76,26 +93,25 @@ spawn_cd[1] -= 1;
 
 
 if (spawn_cd[1] <= 0) {
-    var T = enemy_types[1];
+    var f = enemy_types[1];
 
     // Smaller bursts early; unlock +1 to the upper bound after mid-round
-    var burst_growth = floor(difficulty_01 * 1.25); 
-    var burst = irandom_range(T.burst_min, T.burst_max + burst_growth);
+    var burstf = irandom_range(f.burst_min, f.burst_max + dif.burst_fast);
 
-    for (var k = 0; k < burst; k++) {
+    for (var k = 0; k < burstf; k++) {
         if (instance_number(o_EnemyParent) >= max_on_field) break;
 
         // Off-screen, top-half spawn
         var p = scr_get_spawn_2(spawn_margin);
 
         // Spawn
-        var e = instance_create_layer(p.x, p.y, "Enemies", T.obj);
+        var e = instance_create_layer(p.x, p.y, "Enemies", f.obj);
 
         // Gentle scaling over time (fast units emphasize speed more than HP)
-        var hp_scaled  = round(T.hp  * (1 + 0.65 * difficulty_01)); // up to +4% HP
-        var spd_scaled =        T.spd * (1 + 0.20 * difficulty_01); // up to +% speed
-        var xp_scaled  = round(T.xp  * (1 + 1.25 * difficulty_01)); // up to +% XP
-        var pt_scaled = round(T.points * (1 + 2.25 *difficulty_01));
+        var hp_scaled  = round(f.hp  * dif.hp_mult);
+        var spd_scaled = (f.spd * dif.spd_mult_f);
+        var xp_scaled  = round(f.xp  * dif.xp_mult);
+        var pt_scaled = round(f.points * (1 + 2.25 *difficulty_01));
 
         with (e) {
             max_hp   = hp_scaled; hp = max_hp;
@@ -104,14 +120,9 @@ if (spawn_cd[1] <= 0) {
             points = pt_scaled;
         }
     }
-        // Reset the fast timer: base ± variance, then faster cadence over time
-    var next_seconds = T.base + random_range(-T.variance, T.variance);
-    var cadence_mult = lerp(1, 0.5, difficulty_01); // up % faster by end
-    spawn_cd[1] = max(10, round(next_seconds * cadence_mult * frames_per_second));
+        // next spawn cooldown
+    var next_seconds = f.base + random_range(-f.variance, f.variance);
+    spawn_cd[1] = max(10, round(next_seconds * dif.cadence_fast * frames_per_second));
 }
 #endregion
-
-// 6) Finish condition: time is up AND no enemies remain
-if (round_timer_frames <= 0 && instance_number(o_EnemyParent) == 0) {
-    state = "finished";
 }

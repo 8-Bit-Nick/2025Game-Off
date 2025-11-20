@@ -2,9 +2,9 @@ if (hurt_timer > 0) {
     draw_self();
 
     // 2) Additive “flash” on top (very quick & bright)
-    gpu_set_blendmode(bm_add);
+    draw_set_color(c_fuchsia)
     draw_self();
-    gpu_set_blendmode(bm_normal);
+    draw_set_color(c_white)
 } else {
     draw_self();
 }

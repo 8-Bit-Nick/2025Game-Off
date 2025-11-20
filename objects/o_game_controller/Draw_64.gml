@@ -1,10 +1,19 @@
-if (global.DEBUG){
+// Cursor Pop-ups
+// Render each popup in GUI space
+for (var i = 0; i < array_length(popups); i++) {
+    var p = popups[i];
+
+    // shadow for readability
+    draw_set_alpha(p.alpha);
     draw_set_halign(fa_left);
-    draw_set_valign(fa_top);
-    draw_text(8,6,"Level: " + string(global.level))
-    draw_text(8,22,"XP to next level: " + string(global.xp) + " / " + string(global.xp_next))
-    with o_Tower{
-        draw_text(8,38,"HP: " + string(o_Tower.hp) + " / " + string(o_Tower.max_hp))
-    }
-    draw_text(8,54, "Score: " + string(global.points))
+    draw_set_valign(fa_middle);
+
+    draw_set_color(c_black);
+    draw_text(p.x + 1, p.y + 1, p.text);
+
+    // main colored text
+    draw_set_color(p.col);
+    draw_text(p.x, p.y, p.text);
+
+    draw_set_alpha(1);
 }
