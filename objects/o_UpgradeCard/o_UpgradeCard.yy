@@ -9,8 +9,8 @@
   "name":"o_UpgradeCard",
   "overriddenProperties":[],
   "parent":{
-    "name":"Player stuff",
-    "path":"folders/Objects/Player stuff.yy",
+    "name":"Lighthouse",
+    "path":"folders/Objects/Player stuff/Lighthouse.yy",
   },
   "parentObjectId":null,
   "persistent":false,

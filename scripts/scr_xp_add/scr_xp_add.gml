@@ -24,4 +24,7 @@ function scr_xp_add(amount)
         // Signal the round controller to pause and show upgrade choices
         global.leveling = true;
     }
+    if (!variable_global_exists("leveling") || !global.leveling) {
+    scr_popup_from_cursor_xp(amount);
+}
 }

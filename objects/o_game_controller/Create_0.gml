@@ -13,7 +13,7 @@ global.DEBUG = true;
 
 
 //Tower Spawn
-g_tower_pos = {x:320 , y:350};
+g_tower_pos = {x:400 , y:438};
 instance_create_layer(g_tower_pos.x,g_tower_pos.y,"Instances",o_Tower)
 
 if (!layer_exists("LightFX")) {
@@ -22,11 +22,10 @@ if (!layer_exists("LightFX")) {
 // === XP / Leveling ===
 global.level     = 1;
 global.xp        = 0;
-global.xp_next   = 25;  // XP needed for next level (grows over time)
+global.xp_next   = 30;  // XP needed for next level (grows over time)
 global.leveling  = false;  // when true, show upgrade picker & pause 
 global.points = 0;
 
 
 // Purpose: hold and manage temporary UI popups (xp/points near cursor)
 popups = [];   // each popup will be a small struct we push here
-

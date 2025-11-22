@@ -71,13 +71,15 @@ if (spawn_cd[0] <= 0) {
         var spd_scaled =        T.spd * dif.spd_mult_t;
         var xp_scaled  = round(T.xp  * dif.xp_mult);
         var pt_scaled = round(T.points * (1 + 2.25 *difficulty_01))
+        var dmg_scaled = round(T.contact_damage * dif.damage_mult)
 
 
-        with (e) {
+        with(e) {
             max_hp   = hp_scaled; hp = max_hp;
             base_spd = spd_scaled;
             xp_value = xp_scaled;
             points = pt_scaled;
+            contact_damage = dmg_scaled;
         }
     }
 
@@ -112,12 +114,15 @@ if (spawn_cd[1] <= 0) {
         var spd_scaled = (f.spd * dif.spd_mult_f);
         var xp_scaled  = round(f.xp  * dif.xp_mult);
         var pt_scaled = round(f.points * (1 + 2.25 *difficulty_01));
+        var dmg_scaled = round(f.contact_damage * dif.damage_mult);
+
 
         with (e) {
             max_hp   = hp_scaled; hp = max_hp;
             base_spd = spd_scaled;
             xp_value = xp_scaled;
             points = pt_scaled;
+            contact_damage = dmg_scaled;
         }
     }
         // next spawn cooldown

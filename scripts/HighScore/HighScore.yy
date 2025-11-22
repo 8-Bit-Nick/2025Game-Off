@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"HighScore",
   "parent":{
-    "name":"Enemy",
-    "path":"folders/Scripts/Enemy.yy",
+    "name":"Gameplay",
+    "path":"folders/Scripts/Gameplay.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

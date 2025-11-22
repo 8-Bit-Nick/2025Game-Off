@@ -41,8 +41,8 @@ function scr_get_spawn_2(spawn_pad)
     }
 
     // Tiny jitter so burst spawns don't stack exactly
-    px += random_range(-20 , 20);
-    py += random_range(-20, 20);
+    px += random_range(-40 , 40);
+    py += random_range(-40, 40);
 
     return { x: px, y: py };
 }

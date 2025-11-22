@@ -16,7 +16,7 @@ function scr_upgrades_apply(_id, _tier)
 
     // --- 2) Grab key instances / ensure sensible defaults ---
     var spot  = instance_exists(o_Spotlight) ? instance_find(o_Spotlight, 0) : noone;
-    var tower = instance_exists(o_Tower)     ? instance_find(o_Tower, 0)     : noone;
+    var tower = instance_exists(o_Boat_Parent)     ? instance_find(o_Boat_Parent, 0)     : noone;
 
     if (!variable_global_exists("xp_mult")) global.xp_mult = 1.0;
 

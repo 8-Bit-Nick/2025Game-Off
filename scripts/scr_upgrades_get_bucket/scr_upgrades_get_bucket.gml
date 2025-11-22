@@ -23,16 +23,16 @@ function scr_upgrades_get_bucket() {
             { dps_mul: 1.20 }
         ],
         desc_fmt: [
-            "Increase spotlight damage by +5%. (Common)",
-            "Increase spotlight damage by +10%. (Rare)",
-            "Increase spotlight damage by +20%. (Epic)"
+            "Increase Spotlight damage by +5%. (Common)",
+            "Increase Spotlight damage by +10%. (Rare)",
+            "Increase Spotlight damage by +20%. (Epic)"
         ]
     });
 
     // --- Wide Lens (Radius up) ---
     array_push(bucket, {
         id: "wl",
-        name: "Wide Lens",
+        name: "Wider Lens",
         icon: spr_icon_wl,
         tiers: [
             { radius_mul: 1.08 },
@@ -40,9 +40,9 @@ function scr_upgrades_get_bucket() {
             { radius_mul: 1.25 }
         ],
         desc_fmt: [
-            "Increase spotlight radius by +8%. (Common)",
-            "Increase spotlight radius by +15%. (Rare)",
-            "Increase spotlight radius by +25%. (Epic)"
+            "Increase Spotlight radius by +8%. (Common)",
+            "Increase Spotlight radius by +15%. (Rare)",
+            "Increase Spotlight radius by +25%. (Epic)"
         ]
     });
 
@@ -74,9 +74,9 @@ function scr_upgrades_get_bucket() {
             { blind_power_add: 0.20, blind_linger_mul: 1.20 }  // → 0.60
         ],
         desc_fmt: [
-            "Light inflicts a stronger slow (+10%) and lingers longer. (Common)",
-            "Light inflicts a stronger slow (+15%) and lingers longer. (Rare)",
-            "Light inflicts a stronger slow (+20%) and lingers longer. (Epic)."
+            "Spotlight inflicts a stronger slow (+10%). (Common)",
+            "Spotlight inflicts a stronger slow (+15%). (Rare)",
+            "Spotlight inflicts a stronger slow (+20%). (Epic)."
         ]
     });
 
@@ -108,9 +108,9 @@ function scr_upgrades_get_bucket() {
             { tower_hp_mul: 1.30, tower_heal_mul: 0.30 }
         ],
         desc_fmt: [
-            "Tower Max HP +10% and heal 10%. (Common)",
-            "Tower Max HP +20% and heal 20%. (Rare)",
-            "Tower Max HP +30% and heal 30%. (Epic)"
+            "Boats Max HP +10% and heal 10%. (Common)",
+            "Boats Max HP +20% and heal 20%. (Rare)",
+            "Boats Max HP +30% and heal 30%. (Epic)"
         ]
     });
 

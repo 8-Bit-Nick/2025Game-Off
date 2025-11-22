@@ -28,8 +28,13 @@ with (o_EnemyParent) {
 
     // Circle–circle overlap test 
     if (dx*dx + dy*dy <= r_eff * r_eff) {
-        if (other.dmg_tick > 0) hp -= other.dmg_tick;              // continuous tick
-        hurt_timer  = 3;                                            // brief hit flash
+        if (other.dmg_tick > 0) {
+            hp -= other.dmg_tick; // continuous tick
+            blind_t = max(blind_t,2)
+        }
+        if (!variable_instance_exists(other, "hit_flash")) other.hit_flash = 0;
+        other.hit_flash = max(other.hit_flash, 6);
+        hurt_timer  = 10;// brief hit flash
         blind_timer = max(blind_timer, other.blind_linger_frames_i);// slow linger
     }
 }

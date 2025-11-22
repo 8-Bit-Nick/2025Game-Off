@@ -1,0 +1,12 @@
+image_speed = 0;
+image_index = irandom(2);
+max_hp = 100;
+hp = max_hp;
+hit_radius = 24;
+contact_mult = 1.0
+iframes = 0;
+
+body_w = 84;
+body_h = 52
+image_xscale = 1.5
+image_yscale = 1.5

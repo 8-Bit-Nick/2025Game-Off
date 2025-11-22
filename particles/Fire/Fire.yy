@@ -1,0 +1,25 @@
+{
+  "$GMParticleSystem":"",
+  "%Name":"Fire",
+  "backdropHeight":540,
+  "backdropImageOpacity":0.5,
+  "backdropImagePath":"",
+  "backdropWidth":800,
+  "backdropXOffset":0.0,
+  "backdropYOffset":0.0,
+  "drawOrder":0,
+  "emitters":[
+    {"$GMPSEmitter":"","%Name":"Fire","additiveBlend":true,"directionIncrease":0.1,"directionMax":267.0,"directionMin":273.0,"directionWiggle":0.0,"distribution":0,"editorColour":4284900895,"editorDrawShape":true,"emitCount":1,"emitDelayMax":0.0,"emitDelayMin":0.0,"emitDelayUnits":1,"emitIntervalMax":0.0,"emitIntervalMin":0.0,"emitIntervalUnits":0,"enabled":true,"endColour":4278855423,"GMPresetName":null,"gravityDirection":270.0,"gravityForce":-0.1,"headPosition":0.0,"lifetimeMax":25.0,"lifetimeMin":15.0,"linkedEmitter":null,"locked":false,"midColour":4281520127,"mode":0,"name":"Fire","orientationIncrease":0.0,"orientationMax":0.0,"orientationMin":0.0,"orientationRelative":false,"orientationWiggle":1.0,"regionH":10.0,"regionW":10.0,"regionX":0.0,"regionY":2.0,"resourceType":"GMPSEmitter","resourceVersion":"2.0","scaleX":1.0,"scaleY":1.0,"shape":2,"sizeIncrease":0.0,"sizeMax":1.0,"sizeMin":1.0,"sizeWiggle":0.0,"spawnOnDeathCount":1,"spawnOnDeathGMPreset":null,"spawnOnDeathId":null,"spawnOnUpdateCount":1,"spawnOnUpdateGMPreset":null,"spawnOnUpdateId":null,"speedIncrease":0.3,"speedMax":4.5,"speedMin":0.75,"speedWiggle":1.0,"spriteAnimate":false,"spriteId":null,"spriteRandom":false,"spriteStretch":true,"startColour":4287758325,"texture":12,},
+  ],
+  "name":"Fire",
+  "parent":{
+    "name":"Particles",
+    "path":"folders/Particles.yy",
+  },
+  "resourceType":"GMParticleSystem",
+  "resourceVersion":"2.0",
+  "showBackdrop":true,
+  "showBackdropImage":true,
+  "xorigin":38,
+  "yorigin":0,
+}

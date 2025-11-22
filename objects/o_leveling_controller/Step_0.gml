@@ -10,7 +10,7 @@ if (state == "idle" && variable_global_exists("leveling") && global.leveling) {
     // Begin fading in the dim background
     state       = "fade_in";
     fade_alpha  = 0;        // start transparent
-    fade_target = 0.92;     // how dark the screen gets behind cards
+    fade_target = .92;     // how dark the screen gets behind cards
     fade_speed  = 2.0;      // alpha per second
 }
 

@@ -21,3 +21,6 @@ for (var i = array_length(popups) - 1; i >= 0; i--) {
         array_delete(popups, i, 1);
     }
 }
+if (!instance_exists(o_Boat_Parent)){
+    game_restart()
+}
