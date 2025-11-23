@@ -1,4 +1,26 @@
 draw_self();
+//(hit flash overlay)
+draw_self();
+
+if (hit_flash > 0 && sprite_exists(sprite_index)) {
+    var t = hit_flash / 8.0; // 0..1 over our 8-frame timer
+    var glow_col = make_color_rgb(244, 200, 251); // warm-ish/pink you picked
+
+    gpu_set_blendmode(bm_add);   // additive = visible even over white sprites
+    draw_set_alpha(0.7 * t);
+
+    // gentle halo so it “bleeds” around edges
+    draw_sprite_ext(
+        sprite_index, image_index,
+        x, y,
+        image_xscale * 1.06, image_yscale * 1.06,
+        image_angle,
+        glow_col, 1
+    );
+
+    draw_set_alpha(1);
+    gpu_set_blendmode(bm_normal);
+}
 
 // draw centered rectangle (placeholder)
 var left   = x - body_w * 0.5;

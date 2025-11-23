@@ -1,3 +1,4 @@
+just_attacked = false;
 //Level up pause
 if (variable_global_exists("leveling") && global.leveling){
     exit;
@@ -35,10 +36,27 @@ if (target_boat == noone || !instance_exists(target_boat) || retarget_cd <= 0) {
 
 //Speed compute
 var mult = 1.0
-if (blind_timer > 0){
+if (blind_timer || blind_t > 0){
     mult *= 0.75;
 }
 spd = base_spd * mult;
+
+if (stun_timer > 0) {
+    stun_timer -= 1;
+    image_speed = 0;
+    stun_orbit_ang = (stun_orbit_ang + stun_orbit_speed) mod 360;
+    if (hp <= 0) {
+        scr_xp_add(xp_value);// Set by spawner
+        scr_add_Highscore(points);// set by spawner
+        instance_destroy();
+        instance_create_layer(x, y, "Enemies", o_Enemy_Die)
+}
+    
+exit;
+} else {
+    image_speed = base_anim_speed;
+}
+
 
 #region ATTACK AND MOVE
 
@@ -58,8 +76,8 @@ if (!variable_instance_exists(target_boat, "hit_radius")) target_boat.hit_radius
 // how close we may approach before stopping
 var stop_dist = target_boat.hit_radius + enemy_radius + stop_margin_px;
 
-// (optional) export a flag so other code can read it
-in_melee_range = (dist <= stop_dist + 1);
+//  export a flag so other code can read it
+in_melee_range = (dist <= stop_dist + 3);
 
 // move until the stop ring; don’t overshoot
 if (!in_melee_range) {
@@ -73,11 +91,12 @@ if (!in_melee_range) {
 } else {
     var did_hit = false;
     if (instance_exists(target_boat)) {
-    did_hit = scr_tower_take_contact(target_boat, contact_damage);
-}
-    attack_cooldown = did_hit ? attack_rate_frames : 6;
+        did_hit = scr_tower_take_contact(target_boat, contact_damage);
+    }
+    attack_cooldown = did_hit ? attack_rate_frames : 12;
 
-    // (Optional) tiny hit spark/VFX could be spawned here when did_hit == true
+    // NEW: fire the one-frame “hit landed” flag
+    if (did_hit) just_attacked = true;
 }
 }
 

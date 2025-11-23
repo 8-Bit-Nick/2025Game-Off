@@ -1,11 +1,11 @@
-image_speed = 0;
-image_index = irandom(2);
+sprite_index = choose(spr_Boat,spr_Boat_1,spr_Boat_2);
+image_speed = .815
 max_hp = 100;
 hp = max_hp;
 hit_radius = 24;
 contact_mult = 1.0
 iframes = 0;
-
+hit_flash = 0;
 body_w = 84;
 body_h = 52
 image_xscale = 1.5

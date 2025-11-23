@@ -35,7 +35,7 @@ if (state == "show" && array_length(cards) == 0) {
     var vw  = camera_get_view_width(cam);
     var vh  = camera_get_view_height(cam);
 
-    var margin   = 24;
+    var margin   = 50;
     var y_center = vy + vh * 0.5;
     var x_left   = vx + margin + CARD_W * 0.5;
     var x_right  = vx + vw - margin - CARD_W * 0.5;

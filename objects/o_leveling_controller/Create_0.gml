@@ -26,9 +26,9 @@ CARD_W = 194;
 CARD_H = 250;
 
 var y_center = 225;                    // vertical center for cards
-var x_left   = 230 //112
+var x_left   = 280 //112
 var x_mid    = 400 //320
-var x_right  = 570 //528               // Room math to line up 3 cards
+var x_right  = 520 //528               // Room math to line up 3 cards
 
 card_positions = [
     { x: x_left,  y: y_center },

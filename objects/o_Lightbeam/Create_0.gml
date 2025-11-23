@@ -13,12 +13,12 @@ cur_len_px = 0; //Current beam length (pixels)
 
 // Appearance 
 beam_width_px = 0;
-beam_alpha = .28;
+beam_alpha = .15;
 
 //Rotation
-max_rot_dps = 10000; //Max rotation in degree per sec
-extend_pps = 10000;
-retract_pps = 10000;
+max_rot_dps = 100000; //Max rotation in degree per sec
+extend_pps = 100000;
+retract_pps = 100000;
 rot_smooth = 0;
 
 //Safety

@@ -21,7 +21,7 @@ function scr_upgrades_apply(_id, _tier)
     if (!variable_global_exists("xp_mult")) global.xp_mult = 1.0;
 
     if (instance_exists(spot)) {
-        if (!variable_instance_exists(spot, "crit_chance"))          spot.crit_chance = 0;
+        if (!variable_instance_exists(spot, "ef_crit_chance"))          spot.ef_crit_chance = 0;
         if (!variable_instance_exists(spot, "crit_mult"))            spot.crit_mult   = 1.6;
         if (!variable_instance_exists(spot, "burn_mult"))            spot.burn_mult   = 0.0;
         if (!variable_instance_exists(spot, "blind_slow_base"))      spot.blind_slow_base = 0.80; // 20% slow base
@@ -40,7 +40,7 @@ function scr_upgrades_apply(_id, _tier)
         if (variable_instance_exists(eff, "dps_mul"))        spot.dps        *= eff.dps_mul;
         if (variable_instance_exists(eff, "radius_mul"))     spot.radius_px  *= eff.radius_mul;
 
-        if (variable_instance_exists(eff, "crit_add"))       spot.crit_chance = clamp(spot.crit_chance + eff.crit_add, 0, 0.60);
+        if (variable_instance_exists(eff, "crit_add"))       spot.ef_crit_chance = clamp(spot.ef_crit_chance + eff.crit_add, 0, 0.60);
         if (variable_instance_exists(eff, "crit_mult"))      spot.crit_mult   = eff.crit_mult; // keep latest specified
 
         // Dazzle knobs
