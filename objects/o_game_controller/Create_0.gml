@@ -21,29 +21,51 @@ if (!layer_exists("LightFX")) {
 // === XP / Leveling ===
 global.level     = 1;
 global.xp        = 0;
-global.xp_next   = 30;  // XP needed for next level (grows over time)
+global.xp_next   = 35;  // XP needed for next level (grows over time)
 global.leveling  = false;  // when true, show upgrade picker & pause 
 global.points = 0;
+
+//Gameover / Summary
+global.run_stats = {
+    // clock & scoring
+    time_frames: 0, // we’ll tick this each Step (you already track survive time; we’ll sync later)
+    score_final: 0, // snapshot when game_over triggers
+
+    // performance
+    kills: 0,  // increment in enemy death
+    dmg_total: 0, // add every time spotlight  deals damage
+    hits_total: 0, // total damage hits/ticks for crit % calc
+    crit_hits: 0,  // increment when a crit occurs
+    intensity_peak: 0, // max of difficulty_01 seen this run
+    level_peak: 1,  // highest level reached
+
+    // upgrade contributions 
+    bulb_mult: 1.0,  // Brighter Bulb cumulative multiplier on DPS
+    lens_mult : 1.0,  // Wide Lens cumulative multiplier on radius
+    scholar_mult: 1.0  // Scholar cumulative multiplier on XP gain
+};
+game_over = false;
+boats_seen = false;
 #endregion
 
-// Purpose: hold and manage temporary UI popups (xp/points near cursor)
-popups = [];   // each popup will be a small struct we push here
+// XP and Points popups
+popups = []; // each popup will be a small struct we push here
 
 #region Active's
 //Active Abilities 
 ability_fps = 60;
 
-//  Overcharge (Q) 
-oc_active   = false;        // true while Overcharge is running
-oc_time     = 0;            // frames remaining while active
-oc_time_max = 6 * ability_fps;   // 6s duration
-oc_cd       = 0;            // frames remaining on cooldown
-oc_cd_max   = 20 * ability_fps;  // 20s cooldown
+// Overcharge (Q) 
+oc_active = false; // true while Overcharge is running
+oc_time = 0; // frames remaining while active
+oc_time_max = 6 * ability_fps; // s duration
+oc_cd = 0; // frames remaining on cooldown
+oc_cd_max = 15 * ability_fps;// s cooldown
 
 // Lens Flare (W) 
-flare_cd     = 0;                 // frames remaining on cooldown
-flare_cd_max = 30 * ability_fps;  // 30s cooldown
-flare_cast   = false;             // one-frame trigger
+flare_cd = 0; // frames remaining on cooldown
+flare_cd_max = 20 * ability_fps; // s cooldown
+flare_cast = false; // one-frame trigger
 #endregion
 
 #region Ability Bar
@@ -68,7 +90,7 @@ slot1_offy = 16;     // top padding to first slot
 slot2_offx = slot1_offx + slot_w + slot_gap;
 slot2_offy = slot1_offy;
 
-// (Optional) ability icons if we get there
+// ability icons if we get there
 //spr_icon_overcharge = asset_get_index("spr_icon_overcharge"); // -1 if not found
 //spr_icon_flare      = asset_get_index("spr_icon_flare");      // -1 if not found
 

@@ -1,0 +1,1 @@
+instance_create_layer(x,y+12,layer,o_rock_poof)

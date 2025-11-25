@@ -1,3 +1,4 @@
+if (instance_exists(o_game_controller) && o_game_controller.game_over) exit;
 just_attacked = false;
 //Level up pause
 if (variable_global_exists("leveling") && global.leveling){
@@ -6,10 +7,12 @@ if (variable_global_exists("leveling") && global.leveling){
 if (!variable_instance_exists(id, "hit_flash")) hit_flash = 0;
 
 // decay the flash timer if active
-if (hit_flash > 0) hit_flash -= 1;
-    
-if (blind_t > 0) blind_t -= 1;
-    
+if (hit_flash > 0){
+    hit_flash -= 1;
+}
+if (blind_t > 0){
+    blind_t -= 1;
+}
 //Status - Tick
 if (blind_timer > 0){
     blind_timer -= 1;
@@ -17,8 +20,12 @@ if (blind_timer > 0){
 if (hurt_timer > 0){
     hurt_timer -= 1;
 }
-
-/// Acquire / maintain a specific boat target
+if (slow_t > 0){
+    slow_t -= 1;
+} else{
+    slow_factor = 1.0;
+}
+// Acquire / maintain a specific boat target
 var boat_parent_obj = asset_get_index("o_Boat_Parent"); // adjust if your boat parent name differs
 if (boat_parent_obj == -1 || !instance_exists(boat_parent_obj)) exit; // no boats = nothing to chase
 
@@ -34,12 +41,6 @@ if (target_boat == noone || !instance_exists(target_boat) || retarget_cd <= 0) {
     }
 }
 
-//Speed compute
-var mult = 1.0
-if (blind_timer || blind_t > 0){
-    mult *= 0.75;
-}
-spd = base_spd * mult;
 
 if (stun_timer > 0) {
     stun_timer -= 1;
@@ -60,47 +61,56 @@ exit;
 
 #region ATTACK AND MOVE
 
+
 // Move/stop using specific target_boat
 if (!instance_exists(target_boat)) exit; // safety
 
-var bx = target_boat.x;
-var by = target_boat.y;
+// Default 
+in_melee_range = false;
 
-// desired facing/motion toward our OWN boat
-var dir  = point_direction(x, y, bx, by);
-var dist = point_distance(x, y, bx, by);
+// Only do the melee approach/attack if NOT a ranged AI
+if (!variable_instance_exists(id, "ranged_ai") || !ranged_ai) {
 
-// make sure the boat exposes a melee radius (fallback if not set on boat)
-if (!variable_instance_exists(target_boat, "hit_radius")) target_boat.hit_radius = 16;
+    var bx = target_boat.x;
+    var by = target_boat.y;
 
-// how close we may approach before stopping
-var stop_dist = target_boat.hit_radius + enemy_radius + stop_margin_px;
+    // desired facing/motion toward our OWN boat
+    var dir  = point_direction(x, y, bx, by);
+    var dist = point_distance(x, y, bx, by);
 
-//  export a flag so other code can read it
-in_melee_range = (dist <= stop_dist + 3);
+    // make sure the boat exposes a melee radius (fallback if not set on boat)
+    if (!variable_instance_exists(target_boat, "hit_radius")) target_boat.hit_radius = 16;
 
-// move until the stop ring; don’t overshoot
-if (!in_melee_range) {
-    var to_cover = dist - stop_dist;
-    var step_len = min(base_spd, to_cover);
-    x += lengthdir_x(step_len, dir);
-    y += lengthdir_y(step_len, dir);
-} else {
-    if (attack_cooldown > 0) {
-    attack_cooldown -= 1;
-} else {
-    var did_hit = false;
-    if (instance_exists(target_boat)) {
-        did_hit = scr_tower_take_contact(target_boat, contact_damage);
+    // how close we may approach before stopping
+    var stop_dist = target_boat.hit_radius + enemy_radius + stop_margin_px;
+
+    //  export a flag so other code can read it
+    in_melee_range = (dist <= stop_dist + 3);
+
+    // move until the stop ring; don’t overshoot
+    if (!in_melee_range) {
+        var to_cover = dist - stop_dist;
+        var step_len = min(base_spd* slow_factor, to_cover);
+        x += lengthdir_x(step_len, dir);
+        y += lengthdir_y(step_len, dir);
+    } else {
+        if (attack_cooldown > 0) {
+            attack_cooldown -= 1;
+        } else {
+            var did_hit = false;
+            if (instance_exists(target_boat)) {
+                // use boat-specific contact
+                did_hit = scr_tower_take_contact(target_boat, contact_damage);
+            }
+            attack_cooldown = did_hit ? attack_rate_frames : 12;
+
+            // one-frame “hit landed” flag
+            if (did_hit) just_attacked = true;
+        }
     }
-    attack_cooldown = did_hit ? attack_rate_frames : 12;
-
-    // NEW: fire the one-frame “hit landed” flag
-    if (did_hit) just_attacked = true;
-}
 }
 
-//Anti Stack
+// Anti Stack
 var sep_radius = max(12, enemy_radius * 2);   // neighbors closer than this will repel slightly
 push_x = 0;
 push_y = 0;
@@ -135,6 +145,9 @@ if (hurt_timer > 0) hurt_timer -=1;
 if (hp <= 0) {
     scr_xp_add(xp_value);// Set by spawner
     scr_add_Highscore(points);// set by spawner
+    if (variable_global_exists("run_stats") && is_struct(global.run_stats)){
+        global.run_stats.kills +=1;
+    }
     instance_destroy();
     instance_create_layer(x, y, "Enemies", o_Enemy_Die)
 }

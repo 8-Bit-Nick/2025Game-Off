@@ -1,3 +1,5 @@
+if (instance_exists(o_game_controller)&& o_game_controller.game_over) exit;
+    
 #region Level-Up Pause/resume (Upgrade Picker)
 //pause everything if level up happens
 if(state == "running" && global.leveling){
@@ -23,6 +25,10 @@ if (state == "running") {
     difficulty_01 = clamp(elapsed_frames / (fps_local * 360), 0, 2);
     // Time-based multipliers for this frame
     var dif = scr_diff_from_d01(difficulty_01);
+    //Record intensity for post game stats
+    if (variable_global_exists("run_stats") && is_struct(global.run_stats)){
+    global.run_stats.intensity_peak = max(global.run_stats.intensity_peak, difficulty_01);
+}
     
 
 
@@ -61,8 +67,7 @@ if (spawn_cd[0] <= 0) {
         if (instance_number(o_EnemyParent) >= max_on_field) break;
 
         // Off-screen, top-half spawn point
-        var p = scr_get_spawn_2(spawn_margin);
-
+        var p = scr_get_spawn_boatsafe(22, 22, 96);
         // Create enemy
         var e = instance_create_layer(p.x, p.y, "Enemies", T.obj);
 
@@ -104,7 +109,7 @@ if (spawn_cd[1] <= 0) {
         if (instance_number(o_EnemyParent) >= max_on_field) break;
 
         // Off-screen, top-half spawn
-        var p = scr_get_spawn_2(spawn_margin);
+        var p = scr_get_spawn_boatsafe(22, 22, 96);
 
         // Spawn
         var e = instance_create_layer(p.x, p.y, "Enemies", f.obj);
@@ -129,5 +134,46 @@ if (spawn_cd[1] <= 0) {
     var next_seconds = f.base + random_range(-f.variance, f.variance);
     spawn_cd[1] = max(10, round(next_seconds * dif.cadence_fast * frames_per_second));
 }
-#endregion
+#endregion 
+    #region Ranged Enemy
+    spawn_cd[2] -= 1;
+
+
+if (spawn_cd[2] <= 0) {
+    var r = enemy_types[2];
+
+    // burst timer
+    var burstf = irandom_range(r.burst_min, r.burst_max + dif.burst_fast);
+
+    for (var k = 0; k < burstf; k++) {
+        if (instance_number(o_EnemyParent) >= max_on_field) break;
+
+        // Off-screen, top-half spawn
+        var p = scr_get_spawn_boatsafe(22, 22, 96);
+        // Spawn
+        var e = instance_create_layer(p.x, p.y, "Enemies", r.obj);
+
+        // Gentle scaling over time
+        var hp_scaled  = round(r.hp  * dif.hp_mult);
+        var spd_scaled = (r.spd * dif.spd_mult_f);
+        var xp_scaled  = round(r.xp  * dif.xp_mult);
+        var pt_scaled = round(r.points * (1 + 3 *difficulty_01));
+        var dmg_scaled = round(r.contact_damage * dif.damage_mult);
+
+
+        with (e) {
+            max_hp   = hp_scaled; hp = max_hp;
+            base_spd = spd_scaled;
+            xp_value = xp_scaled;
+            points = pt_scaled;
+            contact_damage = dmg_scaled;
+        }
+    }
+        // next spawn cooldown
+    var next_seconds = r.base + random_range(-r.variance, r.variance);
+    spawn_cd[2] = max(10, round(next_seconds * dif.cadence_tank * frames_per_second));
 }
+    
+    #endregion
+}
+

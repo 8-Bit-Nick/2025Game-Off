@@ -1,3 +1,4 @@
+if (instance_exists(o_game_controller) && o_game_controller.game_over) exit;
 if (variable_global_exists("leveling") && global.leveling){
     exit;
 }
@@ -35,12 +36,12 @@ spot_radius = ef_radius;
 dmg_tick = ef_dps / fps_local;             
 blind_linger_frames_i = round(0.30 * fps_local);      
 
-// Apply damage + blind to enemies inside the spotlight (circle–circle test)
+// Apply damage + slow to enemies inside the spotlight (circle–circle test)
 with (o_EnemyParent) {
     // Small default hit radius if this enemy hasn't defined one
-    var r_enemy = variable_instance_exists(id, "hit_radius") ? hit_radius : 10;
+    var r_enemy = variable_instance_exists(id, "hit_radius") ? hit_radius : 16;
 
-    // distance^2 to spotlight center (other = oSpotlight)
+    // distance^2 to spotlight center (other = o_Spotlight)
     var dx = x - other.x;
     var dy = y - other.y;
 
@@ -49,15 +50,54 @@ with (o_EnemyParent) {
 
     // Circle–circle overlap 
     if (dx*dx + dy*dy <= r_eff * r_eff) {
+
+        // --- Damage tick + crit + run stats ---
         if (other.dmg_tick > 0) {
-            hp -= other.dmg_tick; // continuous tick
-            blind_t = max(blind_timer,2)
+            var dmg = other.dmg_tick;
+            var did_crit = false;
+
+            // roll crit if spotlight exposes it
+            if (variable_instance_exists(other, "ef_crit_chance") && other.ef_crit_chance > 0) {
+                if (random(1) < other.ef_crit_chance) {
+                    did_crit = true;
+                    var mult = (variable_instance_exists(other, "crit_mult") && other.crit_mult > 0) ? other.crit_mult : 1.5;
+                    dmg = ceil(dmg * mult);
+                }
+            }
+
+            // apply damage
+            hp -= dmg;
+
+            // update run stats safely (only if the struct exists)
+            if (variable_global_exists("run_stats") && is_struct(global.run_stats)) {
+                global.run_stats.dmg_total  += dmg;
+                global.run_stats.hits_total += 1;
+                if (did_crit) global.run_stats.crit_hits += 1;
+            }
         }
+
+        // Spotlight feedback (flash the cursor/light)
         if (!variable_instance_exists(other, "hit_flash")) other.hit_flash = 0;
         other.hit_flash = max(other.hit_flash, 6);
-        hurt_timer  = 10;// brief hit flash
-        blind_timer = max(blind_t, other.blind_linger_frames_i);// slow linger
+
+        // Enemy feedback (brief hit flash)
+        hurt_timer = 10;
+
+        // SLOW: state used by movement (no colour/tint)
+        if (!variable_instance_exists(id, "slow_t")) slow_t = 0;
+        if (!variable_instance_exists(id, "slow_factor")) slow_factor = 1.0;
+
+        // Keep slow alive while lit; 
+        slow_t = max(slow_t, 2);
+        slow_factor = min(slow_factor, 0.75);
+
+        // Optional: keep your existing blind timer for visual tint only
+        if (!variable_instance_exists(id, "blind_timer")) blind_timer = 0;
+        blind_timer = max(blind_timer, other.blind_linger_frames_i);
     }
 }
+
+
+
 #endregion
 

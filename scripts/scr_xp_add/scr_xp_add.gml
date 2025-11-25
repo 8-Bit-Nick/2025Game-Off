@@ -1,6 +1,4 @@
-/// scr_xp_add(amount)
 // Adds XP, handles level-ups, and sets a flag to open the upgrade picker.
-// Safe to call anytime; it initializes globals on first use.
 
 function scr_xp_add(amount)
 {

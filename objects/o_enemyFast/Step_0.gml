@@ -1,7 +1,7 @@
 // Inherit the parent event
 event_inherited();
 
-// Play attack anim ONLY if a real hit landed this frame
+// Play attack anim only if hit
 if (just_attacked) {
     is_attacking  = true;
     sprite_index  = spr_attack;

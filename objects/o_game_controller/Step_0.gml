@@ -1,3 +1,7 @@
+if (variable_global_exists("leveling") && global.leveling){
+    exit;
+}
+
 #region Popus
 
 /// Animate Popups
@@ -80,7 +84,7 @@ if (flare_cast) {
         var cy = spot.y;
 
         // Pulse radius = 6× current spotlight effective radius
-        var pulse_r = (variable_instance_exists(spot, "ef_radius") ? spot.ef_radius : spot.radius_px) * 6;
+        var pulse_r = (variable_instance_exists(spot, "ef_radius") ? spot.ef_radius : spot.radius_px) * 3;
 
         // Stun duration 60= 1s
         var stun_frames = 120;
@@ -98,13 +102,30 @@ if (flare_cast) {
     // Optional: fire a simple VFX/screen flash here (we can add later)
     // Optional: play a whoosh SFX here
 
-    // Note: we’ll let your existing code clear flare_cast afterward.
+    
 }
     flare_cast = false;
 
 #endregion
 
 
-if (!instance_exists(o_Boat_Parent)){
-    game_restart()
+// Safety check for boats loading after controller
+if (!boats_seen && instance_number(o_Boat_Parent) > 0) {
+    boats_seen = true;
+}
+
+// Only trigger defeat AFTER boats existed at some point
+if (boats_seen && instance_number(o_Boat_Parent) == 0) {
+    if (!game_over) {
+        game_over = true;
+
+        // snapshot stats
+        if (variable_global_exists("run_stats") && is_struct(global.run_stats)) {
+            global.run_stats.score_final = (variable_global_exists("score") ? global.score : 0);
+            global.run_stats.time_frames = (variable_global_exists("survive_frames") ? global.survive_frames : 0);
+        }
+
+        // start fade-out to end room
+        instance_create_layer(0, 0, "Instances", o_fade_controller);
+    }
 }

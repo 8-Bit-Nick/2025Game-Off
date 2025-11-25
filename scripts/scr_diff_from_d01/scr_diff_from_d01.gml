@@ -5,18 +5,18 @@ function scr_diff_from_d01() {
     var d  = clamp(_d, 0, 1);
 
     // Soft non-linear ramps
-    var hp_mult_base = 1 + 0.75 * power(d, 1.4);
+    var hp_mult_base = 1 + 0.75 * power(d, 1.55);
     var spd_mult_tank = 1 + 0.15 * power(d, 1.2);
-    var spd_mult_fast = 1 + 0.35 * power(d, 1.15);
-    var xp_mult_base = 1 + 0.40 * d;
-    var dmg_mult = 1 + .5 *power(d,1.5)
+    var spd_mult_fast = 1 + 0.4 * power(d, 1.25);
+    var xp_mult_base = 1 + 0.75 * d;
+    var dmg_mult = 1 + .75 *power(d,1.55)
 
     // Spawn cadence ramps (lower = faster)
-    var cadence_tank   = lerp(1.00, 0.60, d);
-    var cadence_fast   = lerp(1.00, 0.55, d);
+    var cadence_tank   = lerp(1.00, 0.58, d);
+    var cadence_fast   = lerp(1.00, 0.42, d);
 
     // Burst growth
-    var burst_bonus_t  = floor(lerp(0, 2, d));
+    var burst_bonus_t  = floor(lerp(0, 1.75, d));
     var burst_bonus_f  = (d >= 0.5) ? 1 : 0;
 
     return {

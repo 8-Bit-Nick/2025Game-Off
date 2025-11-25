@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scr_upgrades_get_bucket",
   "parent":{
-    "name":"Gameplay",
-    "path":"folders/Scripts/Gameplay.yy",
+    "name":"Player",
+    "path":"folders/Scripts/Player.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

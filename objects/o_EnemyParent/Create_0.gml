@@ -25,17 +25,17 @@ just_attacked = false;
 hurt_timer = 0;
 stun_timer = 0;
 blind_timer = 0;
-blind_t = 0; 
+blind_t = 0;
+slow_t      = 0;    // frames remaining of slow
+slow_factor = 1.0;  // 1.0 = 
 
 //Stun setup
-
-// Remember animation speed
 base_anim_speed = image_speed;    // if you set per-child speeds, they can overwrite this
 
 // Tiny orbit state for “stun stars” 
 stun_orbit_ang = irandom(359); // per-enemy desync
-stun_orbit_speed = 6; // degrees per frame (tweak 4–8)
-stun_orbit_radius = 6; // pixels around the head
+stun_orbit_speed = 8; // degrees per frame (tweak 4–8)
+stun_orbit_radius = 8; // pixels around the head
 stun_star_height = - (sprite_get_height(sprite_index) * 0.5 + 6); // sit above head
 
 // cache the icon sprite id now
