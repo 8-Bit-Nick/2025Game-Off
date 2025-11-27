@@ -1,5 +1,12 @@
 if (instance_exists(o_game_controller)&& o_game_controller.game_over) exit;
     
+if (variable_global_exists("leveling") && global.leveling){
+    exit;
+}
+if (variable_global_exists("paused") && global.paused){
+    exit;
+} 
+
 #region Level-Up Pause/resume (Upgrade Picker)
 //pause everything if level up happens
 if(state == "running" && global.leveling){
@@ -171,7 +178,7 @@ if (spawn_cd[2] <= 0) {
     }
         // next spawn cooldown
     var next_seconds = r.base + random_range(-r.variance, r.variance);
-    spawn_cd[2] = max(10, round(next_seconds * dif.cadence_tank * frames_per_second));
+    spawn_cd[2] = max(10, round(next_seconds * dif.cadence_range * frames_per_second));
 }
     
     #endregion

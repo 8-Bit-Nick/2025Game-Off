@@ -1,7 +1,12 @@
 function scr_get_spawn_boatsafe(){
-    var _margin_top    = (argument_count > 0) ? max(1, argument0) : 22;
-    var _margin_side   = (argument_count > 1) ? max(1, argument1) : 22;
+    var _margin_top    = (argument_count > 0) ? max(1, argument0) : 12;
+    var _margin_side   = (argument_count > 1) ? max(1, argument1) : 12;
     var _min_boat_dist = (argument_count > 2) ? argument2        : 96;
+
+    // recent-spawn separation 
+    static _recent = [];           // array of {x,y}
+    static _recent_max = 120;        // remember last few spawns across bursts
+    var _min_sep_recent = 128;      // minimum distance from recent points
 
     // View (room space)
     var cam = view_camera[0];
@@ -14,7 +19,7 @@ function scr_get_spawn_boatsafe(){
 
     var boat_obj = asset_get_index("o_Boat_Parent");
 
-    var tries = 24;
+    var tries = 100;  // a bit more generous for spread
     var bestx = vx;  // fallback seeds
     var besty = vy;
 
@@ -38,7 +43,7 @@ function scr_get_spawn_boatsafe(){
             py = random_range(vy, top_third_y2);
         }
 
-        // Boat distance check
+        // Boat distance check 
         var ok = true;
         if (boat_obj != -1) {
             var n = instance_number(boat_obj);
@@ -52,10 +57,34 @@ function scr_get_spawn_boatsafe(){
             }
         }
 
-        if (ok) return { x: px, y: py };
+        // recent-spawn separation check (avoid clustering within bursts)
+        if (ok) {
+            var rlen = array_length(_recent);
+            for (var j = 0; j < rlen; j++) {
+                var q = _recent[j];
+                if (point_distance(px, py, q.x, q.y) < _min_sep_recent) {
+                    ok = false; break;
+                }
+            }
+        }
+
+        if (ok) {
+            // remember this point for subsequent spawns
+            array_push(_recent, { x: px, y: py });
+            if (array_length(_recent) > _recent_max) array_delete(_recent, 0, 1);
+            return { x: px, y: py };
+        }
 
         bestx = px; besty = py;
     }
+
+    // Fallback: slight jitter so we don't return an identical spot
+    bestx += irandom_range(-46, 46);
+    besty += irandom_range(-46, 46);
+
+    // remember fallback too
+    array_push(_recent, { x: bestx, y: besty });
+    if (array_length(_recent) > _recent_max) array_delete(_recent, 0, 1);
 
     return { x: bestx, y: besty };
 }

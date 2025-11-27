@@ -1,6 +1,4 @@
 #region Globals
-
-
 //Converts seconds to frames
 global.FPS = max(1, game_get_speed(gamespeed_fps));
 
@@ -12,41 +10,63 @@ if (!variable_global_exists("FRAME")) {
 global.DEBUG = true;
 
 //Tower Spawn
+if (room = rm_Main){
 g_tower_pos = {x:400 , y:438};
-instance_create_layer(g_tower_pos.x,g_tower_pos.y,"Instances",o_Tower)
+instance_create_layer(g_tower_pos.x,g_tower_pos.y,"Instances",o_Tower);
+}
+
+if (room = rm_Title){
+g_tower_pos = {x:400 , y:470};
+instance_create_layer(g_tower_pos.x,g_tower_pos.y,"Instances",o_Tower);
+}
 
 if (!layer_exists("LightFX")) {
     layer_create(0, "LightFX");
 }
-// === XP / Leveling ===
+//XP / Leveling
 global.level     = 1;
 global.xp        = 0;
 global.xp_next   = 35;  // XP needed for next level (grows over time)
 global.leveling  = false;  // when true, show upgrade picker & pause 
 global.points = 0;
+global.survive_frames = 0;
+global.crit_chance_total = 0;
+
+
 
 //Gameover / Summary
-global.run_stats = {
-    // clock & scoring
-    time_frames: 0, // we’ll tick this each Step (you already track survive time; we’ll sync later)
-    score_final: 0, // snapshot when game_over triggers
+if (!variable_global_exists("run_stats") || !is_struct(global.run_stats)) {
+    global.run_stats = {
+        time_frames: 0, 
+        score_final: 0, 
+        kills: 0,
+        dmg_total: 0,
+        hits_total: 0, 
+        crit_hits: 0,
+        intensity_peak: 0, 
+        level_peak: 1,
 
-    // performance
-    kills: 0,  // increment in enemy death
-    dmg_total: 0, // add every time spotlight  deals damage
-    hits_total: 0, // total damage hits/ticks for crit % calc
-    crit_hits: 0,  // increment when a crit occurs
-    intensity_peak: 0, // max of difficulty_01 seen this run
-    level_peak: 1,  // highest level reached
+        // upgrade mirrors for the end card
+        bulb_mult:    1.0,   // Brighter Bulb (DPS total multiplier)
+        lens_mult:    1.0,   // Wide Lens (radius total multiplier)
+        scholar_mult: 1.0,   // Scholar (XP total multiplier)
+        crit_chance_total: 0.0, // total additive crit chance from upgrades (0..1)
+        crit_mult: 1.5       // current crit damage multiplier (optional display)
+    };
+} else {
+    if (!variable_struct_exists(global.run_stats, "bulb_mult"))         global.run_stats.bulb_mult = 1.0;
+    if (!variable_struct_exists(global.run_stats, "lens_mult"))         global.run_stats.lens_mult = 1.0;
+    if (!variable_struct_exists(global.run_stats, "scholar_mult"))      global.run_stats.scholar_mult = 1.0;
+    if (!variable_struct_exists(global.run_stats, "crit_chance_total")) global.run_stats.crit_chance_total = 0.0;
+    if (!variable_struct_exists(global.run_stats, "crit_mult"))         global.run_stats.crit_mult = 1.5;
+}
 
-    // upgrade contributions 
-    bulb_mult: 1.0,  // Brighter Bulb cumulative multiplier on DPS
-    lens_mult : 1.0,  // Wide Lens cumulative multiplier on radius
-    scholar_mult: 1.0  // Scholar cumulative multiplier on XP gain
-};
-game_over = false;
-boats_seen = false;
 #endregion
+//Game over triggers
+game_over   = false;
+
+
+
 
 // XP and Points popups
 popups = []; // each popup will be a small struct we push here
@@ -58,13 +78,13 @@ ability_fps = 60;
 // Overcharge (Q) 
 oc_active = false; // true while Overcharge is running
 oc_time = 0; // frames remaining while active
-oc_time_max = 6 * ability_fps; // s duration
+oc_time_max = 5 * ability_fps; // s duration
 oc_cd = 0; // frames remaining on cooldown
 oc_cd_max = 15 * ability_fps;// s cooldown
 
 // Lens Flare (W) 
 flare_cd = 0; // frames remaining on cooldown
-flare_cd_max = 20 * ability_fps; // s cooldown
+flare_cd_max = 18 * ability_fps; // s cooldown
 flare_cast = false; // one-frame trigger
 #endregion
 
@@ -96,6 +116,30 @@ slot2_offy = slot1_offy;
 
 // Cooldown overlay color 
 tray_cool_col = make_color_rgb(40, 40, 40);
+
+
+#endregion
+
+#region Score/Time saving.
+//High score/time persistence
+global.best_score = 0;
+global.best_time_frames = 0;
+global.new_best_score = false;
+global.new_best_time  = false;
+
+var save_file = "save.ini";
+if(file_exists(save_file)) {
+    ini_open(save_file);
+    global.best_score = ini_read_real("Highscores", "Bestscore", 0);
+    global.best_time_frames = ini_read_real("Highscores", "BestTimeFrames", 0);
+    ini_close();
+} else{
+    //create file with defaults
+    ini_open(save_file);
+    ini_write_real("Highscores", "BestScore", 0);
+    ini_write_real("Highscores", "BestTimeFrames", 0);
+    ini_close();
+}
 
 
 #endregion

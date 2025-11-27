@@ -1,0 +1,1 @@
+with (o_sound_controller) music_play_intro_then_loop(snd_main_intro, snd_main_loop);

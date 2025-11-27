@@ -5,13 +5,14 @@ var fps_local = variable_global_exists("FPS") ? max(1,global.FPS) : 60;
 if (state == "idle" && variable_global_exists("leveling") && global.leveling) {
     // UI startup: hide spotlight visuals & switch to normal cursor
     if (instance_exists(spotlight)) spotlight.visible = false;
-    window_set_cursor(cr_handpoint);
+    window_set_cursor(cr_none)
+    cursor_sprite = spr_Spotlight;
 
     // Begin fading in the dim background
     state       = "fade_in";
     fade_alpha  = 0;        // start transparent
     fade_target = .92;     // how dark the screen gets behind cards
-    fade_speed  = 2.0;      // alpha per second
+    fade_speed  = 1.7;      // alpha per second
 }
 
 // Handle fade-in
@@ -35,7 +36,7 @@ if (state == "show" && array_length(cards) == 0) {
     var vw  = camera_get_view_width(cam);
     var vh  = camera_get_view_height(cam);
 
-    var margin   = 50;
+    var margin   = 65;
     var y_center = vy + vh * 0.5;
     var x_left   = vx + margin + CARD_W * 0.5;
     var x_right  = vx + vw - margin - CARD_W * 0.5;
@@ -92,13 +93,7 @@ if (state == "show" && array_length(cards) == 0) {
 var picked = noone;
 if (state == "show" && array_length(cards) > 0) {
     
-//
-    //// Number keys (1 / 2 / 3)
-    //if (keyboard_check_pressed(vk_1) && array_length(cards) >= 1) picked = cards[0];
-    //if (keyboard_check_pressed(vk_2) && array_length(cards) >= 2) picked = cards[1];
-    //if (keyboard_check_pressed(vk_3) && array_length(cards) >= 3) picked = cards[2];
-
-    // 2Mouse click (cards are drawn in ROOM space, so use mouse_x/mouse_y)
+// 2Mouse click (cards are drawn in ROOM space, so use mouse_x/mouse_y)
     if (picked == noone && mouse_check_button_pressed(mb_left)) {
         var mx = mouse_x;
         var my = mouse_y;
@@ -112,7 +107,7 @@ if (state == "show" && array_length(cards) > 0) {
         }
     }
 
-    // 3) If something was picked, stash choice and begin fade-out
+    // If something was picked, stash choice and begin fade-out
     if (picked != noone) {
         chosen_id   = picked.upgrade_id;   // string id like "bb","wl","fb","dz","sch","fc"
         chosen_tier = picked.tier_index;   // 0,1,2

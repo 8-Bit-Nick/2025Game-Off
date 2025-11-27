@@ -1,6 +1,6 @@
 {
   "$GMSound":"v2",
-  "%Name":"snd_TitleTutorial",
+  "%Name":"snd_main_intro",
   "audioGroupId":{
     "name":"audiogroup_default",
     "path":"audiogroups/audiogroup_default",
@@ -10,9 +10,9 @@
   "compression":0,
   "compressionQuality":4,
   "conversionMode":0,
-  "duration":52.636734,
+  "duration":88.65959,
   "exportDir":"",
-  "name":"snd_TitleTutorial",
+  "name":"snd_main_intro",
   "parent":{
     "name":"Sounds",
     "path":"folders/Sounds.yy",
@@ -21,6 +21,6 @@
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":44100,
-  "soundFile":"snd_TitleTutorial.mp3",
+  "soundFile":"snd_main_intro.mp3",
   "volume":1.0,
 }

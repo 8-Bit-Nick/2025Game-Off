@@ -17,11 +17,9 @@ for (var i = 0; i < array_length(popups); i++) {
 
     draw_set_alpha(1);
 }
-
+if (room = rm_Main){
 #region Ability Tray
-// Ability tray: center under timer + draw Q / W labels
-
-// ===== 1) Placement under the timer =====
+//  Placement under the timer 
 var gui_w = display_get_gui_width();
 
 // If your timer code sets a real bottom Y, read it; otherwise use a fallback height.
@@ -32,7 +30,7 @@ var timer_bottom = (variable_global_exists("timer_gui_bottom"))
 tray_x = round((gui_w - tray_w) * 0.5);
 tray_y = round(timer_bottom + tray_top_gap);
 
-// ===== 2) Draw tray background =====
+//  Draw tray background 
 if (spr_tray != -1 && sprite_exists(spr_tray)) {
     draw_sprite(spr_tray, 0, tray_x, tray_y);
 } else {
@@ -42,7 +40,7 @@ if (spr_tray != -1 && sprite_exists(spr_tray)) {
     draw_set_alpha(1);
 }
 
-// ===== 3) Compute slot rects (based on your art measurements) =====
+// Compute slot rects (based on your art measurements)
 var s1x1 = tray_x + slot1_offx;
 var s1y1 = tray_y + slot1_offy;
 var s1x2 = s1x1 + slot_w;
@@ -57,7 +55,7 @@ var s2y2 = s2y1 + slot_h;
 slot1_rect = [s1x1, s1y1, s1x2, s1y2];
 slot2_rect = [s2x1, s2y1, s2x2, s2y2];
 
-// ===== 4) Optional icons centered in slots =====
+// Optional icons centered in slots 
 var s1cx = (s1x1 + s1x2) * 0.5;
 var s1cy = (s1y1 + s1y2) * 0.5;
 var s2cx = (s2x1 + s2x2) * 0.5;
@@ -109,3 +107,38 @@ _cd_mask(s1x1+4, s1y1+8, s1x2+1, s1y2-2, q_pct);
 _cd_mask(s2x1+2, s2y1+8, s2x2, s2y2-2, w_pct);
 
 #endregion
+    }
+#region Title Screen Bests
+   if (room = rm_Title){ 
+    // Title: show saved records
+    var gui_w = display_get_gui_width();
+    var gui_h = display_get_gui_height();
+
+// format best time
+    var fps_local = (variable_global_exists("FPS") && global.FPS > 0) ? global.FPS : 60;
+    var best_timef = (variable_global_exists("best_time_frames") ? global.best_time_frames : 0);
+    var secs = floor(best_timef / fps_local);
+    var mm = secs div 60;
+    var ss = secs mod 60;
+    var mm_s = (mm < 10) ? "0" + string(mm) : string(mm);
+    var ss_s = (ss < 10) ? "0" + string(ss) : string(ss);
+  
+  // pull best points 
+    var best_pts = (variable_global_exists("best_score") ? global.best_score : 0);
+  
+  // style & draw
+    var pad = -5;
+    draw_set_halign(fa_middle);
+    draw_set_valign(fa_top);
+    draw_set_font(fnt_card_title_2)
+    draw_set_colour(c_black);
+  
+  // shadow for readability (optional)
+    var tx = gui_w - pad;
+    var ty = gui_h - pad;
+    draw_set_colour(c_dkgrey);
+    draw_text(tx-785, ty-43, "Best Time: " + mm_s + ":" + ss_s +"                      " + " Highscore: " + string(best_pts) + " pts");
+    draw_set_colour(c_aqua);
+    draw_text(tx-784, ty-42, "Best Time: " + mm_s + ":" + ss_s +"                      " + " Highscore: " + string(best_pts) + " pts");
+}
+    #endregion

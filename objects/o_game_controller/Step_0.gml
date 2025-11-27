@@ -1,6 +1,13 @@
 if (variable_global_exists("leveling") && global.leveling){
     exit;
 }
+if (variable_global_exists("paused") && global.paused){
+    exit;
+}
+if (!game_over && !(variable_global_exists("leveling") && global.leveling && !global.paused)) {
+    global.survive_frames += 1;  // 1 frame per step
+}
+
 
 #region Popus
 
@@ -108,24 +115,41 @@ if (flare_cast) {
 
 #endregion
 
+#region Death and game end sequence
 
-// Safety check for boats loading after controller
-if (!boats_seen && instance_number(o_Boat_Parent) > 0) {
-    boats_seen = true;
+if (!instance_exists(o_Boat_Parent)){
+    game_over = true;
 }
-
-// Only trigger defeat AFTER boats existed at some point
-if (boats_seen && instance_number(o_Boat_Parent) == 0) {
-    if (!game_over) {
-        game_over = true;
-
-        // snapshot stats
-        if (variable_global_exists("run_stats") && is_struct(global.run_stats)) {
-            global.run_stats.score_final = (variable_global_exists("score") ? global.score : 0);
-            global.run_stats.time_frames = (variable_global_exists("survive_frames") ? global.survive_frames : 0);
-        }
-
-        // start fade-out to end room
-        instance_create_layer(0, 0, "Instances", o_fade_controller);
+if (game_over=true){
+    if (variable_global_exists("run_stats") && is_struct(global.run_stats)){
+        global.run_stats.score_final = (variable_global_exists("points") ? global.points: 0);
+        global.run_stats.time_frames = (variable_global_exists("survive_frames") ? global.survive_frames: 0);
     }
+    
+ // High score/time update and persist
+
+var cur_score = (variable_global_exists("points") ? global.points : 0);
+var cur_timef = (variable_global_exists("survive_frames") ? global.survive_frames : 0);
+
+//Flag for end screen
+global.new_best_score = false;
+global.new_best_time = false;
+
+//Compare and update globals
+if (cur_score > global.best_score){
+    global.best_score = cur_score;
+    global.new_best_score = true;
 }
+if (cur_timef > global.best_time_frames){
+    global.best_time_frames = cur_timef;
+    global.new_best_time = true;
+}
+
+//Update Ini save
+ini_open("save.ini");
+ini_write_real("Highscores", "Bestscore", global.best_score);
+ini_write_real("Highscores", "BestTimeFrames", global.best_time_frames);
+ini_close();
+    instance_create_layer(0,0,"Instances", o_fade_controller);
+}
+#endregion

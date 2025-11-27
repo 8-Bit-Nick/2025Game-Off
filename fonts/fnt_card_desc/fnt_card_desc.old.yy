@@ -1,7 +1,7 @@
 {
   "$GMFont":"",
   "%Name":"fnt_card_desc",
-  "AntiAlias":0,
+  "AntiAlias":1,
   "applyKerning":0,
   "ascender":13,
   "ascenderOffset":0,
@@ -107,7 +107,7 @@
     "124":{"character":124,"h":16,"offset":2,"shift":5,"w":2,"x":249,"y":2,},
     "125":{"character":125,"h":16,"offset":0,"shift":5,"w":4,"x":243,"y":2,},
     "126":{"character":126,"h":16,"offset":0,"shift":9,"w":8,"x":130,"y":56,},
-    "9647":{"character":9647,"h":16,"offset":3,"shift":16,"w":9,"x":140,"y":56,},
+    "9647":{"character":9647,"h":16,"offset":3,"shift":16,"w":10,"x":140,"y":56,},
   },
   "hinting":0,
   "includeTTF":false,

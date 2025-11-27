@@ -20,13 +20,13 @@ state = "running";
 //    Fields: { obj, base interval (sec), variance (sec), burst_min, burst_max, base_hp, base_spd, base_xp }
 enemy_types = [
     // Tank: slower, tougher baseline trickle
-    { obj:o_enemyTank,  base:9.6, variance:1.2, burst_min:1, burst_max:2, hp:48, spd:0.25, xp:9, points:10, contact_damage:8},
+    { obj:o_enemyTank,  base:12.5, variance:.65, burst_min:1, burst_max:3, hp:50, spd:0.22, xp:10, points:20, contact_damage:10},
 
     // Fast: quicker cadence, smaller bursts, lower HP but more pressure
-    { obj:o_enemyFast,  base:5.68, variance:.85, burst_min:1, burst_max:3, hp:18, spd:.45, xp:6, points:5, contact_damage:5},
+    { obj:o_enemyFast,  base:7.5, variance:.5, burst_min:1, burst_max:2, hp:20, spd:.55, xp:5, points:10, contact_damage:5},
 
     // Ranged: med sped, throws boulder
-    { obj:o_enemyRange, base: 7.8, variance:.75, burst_min:1, burst_max:2, hp:28, spd:.32, xp:15, points:15, contact_damage:0}
+    { obj:o_enemyRange, base: 10.8, variance:.62, burst_min:2, burst_max:2, hp:38, spd:.35, xp:15, points:15, contact_damage:10}
 ];
 
 // Per-type spawn cooldowns (FRAMES), randomized from base ± variance
@@ -38,7 +38,7 @@ for (var i = 0; i < array_length(enemy_types); i++) {
 }
 
 // Spawn constraints and difficulty tracker
-spawn_margin  = 20; // off-screen distance for spawns
+spawn_margin  = 18; // off-screen distance for spawns
 max_on_field  = 120; // enemy cap
 difficulty_01 = 0; // will go 0 → 1 across the round (computed in Step)
 

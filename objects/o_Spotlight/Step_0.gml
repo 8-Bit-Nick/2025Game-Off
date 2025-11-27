@@ -2,6 +2,7 @@ if (instance_exists(o_game_controller) && o_game_controller.game_over) exit;
 if (variable_global_exists("leveling") && global.leveling){
     exit;
 }
+
 #region Overcharge
 //Find Game controller
 var gc = instance_exists(o_game_controller) ? instance_find(o_game_controller,0): noone;
@@ -11,6 +12,7 @@ var oc_on = (instance_exists(gc) && gc.oc_active);
 var oc_mult = oc_on ? 2 : 1;
 
 //Effective stats
+crit_chance = max(crit_chance, global.crit_chance_total);
 ef_dps = dps * oc_mult;
 ef_crit_chance = clamp(crit_chance * oc_mult,0,1);
 ef_radius = radius_px * oc_mult;
@@ -36,22 +38,19 @@ spot_radius = ef_radius;
 dmg_tick = ef_dps / fps_local;             
 blind_linger_frames_i = round(0.30 * fps_local);      
 
-// Apply damage + slow to enemies inside the spotlight (circle–circle test)
+// Apply damage + slow to enemies 
 with (o_EnemyParent) {
-    // Small default hit radius if this enemy hasn't defined one
-    var r_enemy = variable_instance_exists(id, "hit_radius") ? hit_radius : 16;
-
-    // distance^2 to spotlight center (other = o_Spotlight)
     var dx = x - other.x;
     var dy = y - other.y;
 
-    // Effective collision radius 
+    // ADD THIS:
+    var r_enemy = variable_instance_exists(id, "hit_radius") ? hit_radius : 16;
+
     var r_eff = r_enemy + other.spot_radius;
 
-    // Circle–circle overlap 
     if (dx*dx + dy*dy <= r_eff * r_eff) {
 
-        // --- Damage tick + crit + run stats ---
+        //  Damage tick + crit + run stats
         if (other.dmg_tick > 0) {
             var dmg = other.dmg_tick;
             var did_crit = false;

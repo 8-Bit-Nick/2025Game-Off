@@ -15,7 +15,7 @@ BOT_BOX_OX = -68;  BOT_BOX_OY = 16;    BOT_BOX_W = 140;  BOT_BOX_H = 79;   // de
 upgrade_id = -1;
 title_text = "Title";
 desc_text = "Description goes here.";
-icon_spr = noone;
+icon_sprite = noone;
 key_hint = "";
 
 //Hover / Selected

@@ -29,7 +29,7 @@ function scr_upgrades_get_bucket() {
         ]
     });
 
-    // --- Wide Lens (Radius up) ---
+    //Wide Lens (Radius up)
     array_push(bucket, {
         id: "wl",
         name: "Wider Lens",
@@ -46,7 +46,7 @@ function scr_upgrades_get_bucket() {
         ]
     });
 
-    // --- Focused Beam (Crit chance up; ensure crit_mult set elsewhere if missing) ---
+    //Focused Beam (Crit chance up; ensure crit_mult set elsewhere if missing
     array_push(bucket, {
         id: "fb",
         name: "Focused Beam",

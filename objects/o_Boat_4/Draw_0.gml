@@ -37,6 +37,7 @@ var bar_y = top + 46;
 
 var hp_ratio = clamp(hp / max_hp, 0, 1);
 
+if (room = rm_Main){
 // bar background
 draw_set_color(make_color_rgb(40, 40, 40));
 draw_rectangle(bar_x, bar_y, bar_x + bar_w, bar_y + bar_h, false);
@@ -44,3 +45,4 @@ draw_rectangle(bar_x, bar_y, bar_x + bar_w, bar_y + bar_h, false);
 // bar fill
 draw_set_color(make_color_rgb(80,220,90));
 draw_rectangle(bar_x,bar_y, bar_x + bar_w * hp_ratio, bar_y + bar_h,false);
+}

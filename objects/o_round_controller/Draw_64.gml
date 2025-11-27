@@ -49,19 +49,13 @@ if (state == "running" || state == "levelup_pause") {
     draw_set_color(c_fuchsia);
     draw_text(9,7,"Level: " + string(global.level))
     draw_text(9,32,"XP to next level: " + string(global.xp) + " / " + string(global.xp_next))
-    with o_Boat_Parent{
-        draw_text(9,57,"HP: " + string(o_Boat_Parent.hp) + " / " + string(o_Boat_Parent.max_hp))
-}
-    draw_text(9,82, "Score: " + string(global.points))
+    draw_text(9,57, "Score: " + string(global.points))
     
     //text
     draw_set_color(c_white);
     draw_text(8,6,"Level: " + string(global.level))
     draw_text(8,31,"XP to next level: " + string(global.xp) + " / " + string(global.xp_next))
-    with o_Boat_Parent{
-        draw_text(8,56,"HP: " + string(o_Boat_Parent.hp) + " / " + string(o_Boat_Parent.max_hp))
-    }
-    draw_text(8,81, "Score: " + string(global.points))
+    draw_text(8,56, "Score: " + string(global.points))
 
 
 }
