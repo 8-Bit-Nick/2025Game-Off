@@ -18,9 +18,12 @@ function scr_xp_add(amount)
     while (global.xp >= global.xp_next) {
         global.xp -= global.xp_next;
         global.level += 1;
+        
+        //Update Global Level
+        global.run_stats.level_peak = max(global.run_stats.level_peak, global.level);
 
         // Mild non-linear growth (tweak to taste)
-        global.xp_next = round(global.xp_next * 1.25 + 3);
+        global.xp_next = round(global.xp_next * 1.15 + 2);
 
         // Signal the round controller to pause and show upgrade choices
         global.leveling = true;

@@ -4,8 +4,10 @@ if (variable_global_exists("leveling") && global.leveling){
 if (variable_global_exists("paused") && global.paused){
     exit;
 }
-if (!game_over && !(variable_global_exists("leveling") && global.leveling && !global.paused)) {
+if (!game_over && !(variable_global_exists("leveling") && global.leveling)) {
     global.survive_frames += 1;  // 1 frame per step
+}else if (global.paused){
+    global.survive_frames += 0;
 }
 
 
@@ -75,6 +77,16 @@ if (!blocked) {
         if (flare_cd <= 0) {
             flare_cd   = flare_cd_max;
             flare_cast = true;     // one-frame pulse request; we’ll handle it next
+            
+            var spot = instance_exists(o_Spotlight) ? instance_find(o_Spotlight, 0) : noone;
+            if (instance_exists(spot)) {
+            with (instance_create_layer(spot.x, spot.y, "Instances", o_fx_LensFlare)) {
+                caster      = spot;      // <— store the spotlight instance to read ef_radius LIVE
+                mult        = 3.0;       // 3× the current radius
+                base_radius = spot.ef_radius; // fallback if caster disappears mid-fx
+                
+                }
+            }
         }
     }
 }

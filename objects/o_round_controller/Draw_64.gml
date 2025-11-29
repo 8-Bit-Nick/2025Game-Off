@@ -28,18 +28,25 @@ if (state == "running" || state == "levelup_pause") {
     draw_text(gw * 0.5, 8, timer_text);
     
     //  Wave Intensity (top-right): show difficulty_01 as a percent
-    var intensity_pct = round(difficulty_01 * 100);
+    var I_scaler = (variable_global_exists("intensity_scaler") && global.intensity_scaler > 0)
+    ? global.intensity_scaler
+    : 1.0;
 
+// % growth since start (1.0 → 0%, 2.0 → 100%, 3.0 → 200% ...)
+    var intensity_pct_growth = round(max(0, (I_scaler - 1.0) * 100));
+    intensity_pct_growth = max(1, intensity_pct_growth);
+
+// draw
     draw_set_halign(fa_right);
     draw_set_valign(fa_top);
 
-    // shadow
+// shadow
     draw_set_color(c_fuchsia);
-    draw_text(gw - 9, 9, "Intensity: " + string(intensity_pct) + "%");
-    
-    //text
+    draw_text(gw - 9, 9, "Intensity: " + string(intensity_pct_growth) + "%");
+
+// text
     draw_set_color(c_white);
-    draw_text(gw - 10, 8, "Intensity: " + string(intensity_pct) + "%");
+    draw_text(gw - 10, 8, "Intensity: " + string(intensity_pct_growth) + "%");
     
     //Level/XP/Score -- Left Top
     draw_set_halign(fa_left);

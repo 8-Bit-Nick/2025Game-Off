@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scr_tower_take_contact",
   "parent":{
-    "name":"Player",
-    "path":"folders/Scripts/Player.yy",
+    "name":"Gameplay",
+    "path":"folders/Scripts/Gameplay.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

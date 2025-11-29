@@ -26,7 +26,7 @@ if (!layer_exists("LightFX")) {
 //XP / Leveling
 global.level     = 1;
 global.xp        = 0;
-global.xp_next   = 35;  // XP needed for next level (grows over time)
+global.xp_next   = 25;  // XP needed for next level 
 global.leveling  = false;  // when true, show upgrade picker & pause 
 global.points = 0;
 global.survive_frames = 0;
@@ -44,7 +44,7 @@ if (!variable_global_exists("run_stats") || !is_struct(global.run_stats)) {
         hits_total: 0, 
         crit_hits: 0,
         intensity_peak: 0, 
-        level_peak: 1,
+        level_peak: global.level,
 
         // upgrade mirrors for the end card
         bulb_mult:    1.0,   // Brighter Bulb (DPS total multiplier)

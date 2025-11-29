@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_run_reset",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_run_reset",
+  "parent":{
+    "name":"Gameplay",
+    "path":"folders/Scripts/Gameplay.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

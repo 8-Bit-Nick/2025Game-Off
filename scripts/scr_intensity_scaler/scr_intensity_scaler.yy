@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_get_spawn_2",
+  "%Name":"scr_intensity_scaler",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_get_spawn_2",
+  "name":"scr_intensity_scaler",
   "parent":{
     "name":"Enemy",
     "path":"folders/Scripts/Enemy.yy",

@@ -12,10 +12,10 @@ if (state == "idle" && variable_global_exists("leveling") && global.leveling) {
     state       = "fade_in";
     fade_alpha  = 0;        // start transparent
     fade_target = .92;     // how dark the screen gets behind cards
-    fade_speed  = 1.7;      // alpha per second
+    fade_speed  = 1.5;      // alpha per second
 }
 
-// Handle fade-in
+// fade-in
 if (state == "fade_in") {
     fade_alpha += fade_speed / fps_local;
     if (fade_alpha >= fade_target) {
@@ -25,7 +25,7 @@ if (state == "fade_in") {
 }
 
 
-// SHOW: spawn 3 centered cards
+// spawn 3 centered cards
 if (state == "show" && array_length(cards) == 0) {
     
 
@@ -89,7 +89,7 @@ if (state == "show" && array_length(cards) == 0) {
     }
 }
 //Show State Input/Choose Card
-//handle input (click or 1/2/3)
+//handle input (click
 var picked = noone;
 if (state == "show" && array_length(cards) > 0) {
     
@@ -115,12 +115,13 @@ if (state == "show" && array_length(cards) > 0) {
         // destroy the three card instances
         for (var j = 0; j < array_length(cards); j++) {
             if (instance_exists(cards[j])) instance_destroy(cards[j]);
+                audio_play_sound(snd_upgrade,1,false,0.06,undefined)
         }
         cards = [];
 
         // transition to fade-out; the fade-out block will call scr_upgrades_apply(...)
         state      = "fade_out";
-        fade_speed = 2.0;
+        fade_speed = 1.5;
     }
 }
 // Fade out

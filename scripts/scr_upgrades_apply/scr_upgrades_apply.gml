@@ -40,8 +40,8 @@ function scr_upgrades_apply(_id, _tier){
 
     //  Defaults (spotlight)
     if (instance_exists(spot)) {
-        if (!variable_instance_exists(spot, "dps"))              spot.dps              = 4;
-        if (!variable_instance_exists(spot, "radius_px"))        spot.radius_px        = 16;
+        if (!variable_instance_exists(spot, "dps"))              spot.dps              = 20;
+        if (!variable_instance_exists(spot, "radius_px"))        spot.radius_px        = 20;
         if (!variable_instance_exists(spot, "ef_crit_chance"))   spot.ef_crit_chance   = 0.0;
         if (!variable_instance_exists(spot, "crit_mult"))        spot.crit_mult        = 1.6;
         if (!variable_instance_exists(spot, "blind_slow_base"))  spot.blind_slow_base  = 0.80;
@@ -82,7 +82,6 @@ if (_crit_add != 0) {
     global.crit_chance_total = clamp(global.crit_chance_total + _crit_add, 0, 0.60);
 
     // apply to spotlight if it exists
-    var spot = instance_exists(o_Spotlight) ? instance_find(o_Spotlight, 0) : noone;
     if (instance_exists(spot)) {
         if (!variable_instance_exists(spot, "ef_crit_chance")) spot.ef_crit_chance = 0.0;
         spot.ef_crit_chance = global.crit_chance_total;

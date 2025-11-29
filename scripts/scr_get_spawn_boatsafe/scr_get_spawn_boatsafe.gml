@@ -5,8 +5,8 @@ function scr_get_spawn_boatsafe(){
 
     // recent-spawn separation 
     static _recent = [];           // array of {x,y}
-    static _recent_max = 120;        // remember last few spawns across bursts
-    var _min_sep_recent = 128;      // minimum distance from recent points
+    static _recent_max = 300;        // remember last few spawns across bursts
+    var _min_sep_recent = 300;      // minimum distance from recent points
 
     // View (room space)
     var cam = view_camera[0];

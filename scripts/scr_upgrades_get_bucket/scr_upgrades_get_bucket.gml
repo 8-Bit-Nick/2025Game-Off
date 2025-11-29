@@ -6,8 +6,8 @@
 // icon     : sprite resource for the card icon (use placeholders for now)
 // tiers    : array of tier structs. Each tier may define any of:
 // { dps_mul, radius_mul, crit_add, crit_mult, blind_power_add, blind_linger_mul,burn_add, xp_mul, tower_hp_mul, tower_heal_mul, contact_mul }
-//             (We’ll interpret these when applying the upgrade.)
-// - desc_fmt : array of display strings per tier (for the card text)
+
+
 
 function scr_upgrades_get_bucket() {
     var bucket = [];

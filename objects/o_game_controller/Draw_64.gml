@@ -40,7 +40,7 @@ if (spr_tray != -1 && sprite_exists(spr_tray)) {
     draw_set_alpha(1);
 }
 
-// Compute slot rects (based on your art measurements)
+// Compute slot rects
 var s1x1 = tray_x + slot1_offx;
 var s1y1 = tray_y + slot1_offy;
 var s1x2 = s1x1 + slot_w;
@@ -51,11 +51,11 @@ var s2y1 = tray_y + slot2_offy;
 var s2x2 = s2x1 + slot_w;
 var s2y2 = s2y1 + slot_h;
 
-// Store for later (icons/cooldowns/mouse hit-tests if you add clicks later)
+// Store for later icons/cooldowns
 slot1_rect = [s1x1, s1y1, s1x2, s1y2];
 slot2_rect = [s2x1, s2y1, s2x2, s2y2];
 
-// Optional icons centered in slots 
+// icons centered in slots 
 var s1cx = (s1x1 + s1x2) * 0.5;
 var s1cy = (s1y1 + s1y2) * 0.5;
 var s2cx = (s2x1 + s2x2) * 0.5;

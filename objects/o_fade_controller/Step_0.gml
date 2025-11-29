@@ -8,6 +8,7 @@ if (room = rm_Title){
         case "hold":
             hold -= 1;
             if (hold <= 0) {
+                audio_stop_all();
                 room_goto(rm_Main);
             }
             break;
@@ -24,7 +25,8 @@ if (room = rm_Main){
         case "hold":
             hold -= 1;
             if (hold <= 0) {
-                room_goto(target_room);
+                audio_stop_all();
+                room_goto(rm_GameOver);
             }
             break;
     }

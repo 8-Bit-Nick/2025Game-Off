@@ -53,7 +53,7 @@ var timer_text = mm_str + ":" + ss_str;
 // Other values
 var score_txt = (rs != noone) ? string(rs.score_final) : "0";
 var kills_txt = (rs != noone) ? string(rs.kills)       : "0";
-var intensity_pct = (rs != noone) ? round(clamp(rs.intensity_peak, 0, 1) * 100) : 0;
+var intensity_pct = (rs != noone) ? round(rs.intensity_peak * 100) : 0; 
 var level_peak  = (rs != noone) ? rs.level_peak : 1;
 var dmg_total  = (rs != noone) ? rs.dmg_total  : 0;
 
@@ -181,5 +181,5 @@ tpos_y += lineh+8
 // Footer hint
 draw_set_halign(fa_left);
 draw_set_colour(make_color_rgb(70, 90, 110));
-draw_text(panel_x + pad, panel_y + panel_h - pad - lineh, "Press R to Retry  |  Esc to Menu");
+draw_text(panel_x + pad, panel_y + panel_h - pad - lineh, "Press R to Restart |  Esc to Quit");
 draw_set_colour(c_black); // 

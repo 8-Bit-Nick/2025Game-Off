@@ -2,6 +2,12 @@ if (instance_exists(o_game_controller) && o_game_controller.game_over) exit;
 if (variable_global_exists("leveling") && global.leveling){
     exit;
 }
+var g_w = display_get_width();
+var g_h = display_get_height();
+
+
+
+move_and_collide(x,y,o_col_SL)
 
 #region Overcharge
 //Find Game controller

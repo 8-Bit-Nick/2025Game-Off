@@ -13,7 +13,7 @@ function scr_diff_from_d01() {
 
     // Spawn cadence ramps (lower = faster)
     var cadence_tank = lerp(1.0, 0.65, d);
-    var cadence_fast = lerp(1.0, 0.42, d);
+    var cadence_fast = lerp(1.0, 0.45, d);
     var cadence_range = lerp(1.0, 0.75,d);
 
     // Burst growth

@@ -4,18 +4,18 @@ stop_margin_px = 180;
 ranged_ai = true;
 enemy_radius = 26;
 // combat tuning 
-contact_damage = 15; // if it ever touches a boat
+contact_damage = 10; // set by spawner
 attack_rate_frames = 135; // throw - 60=1s
-attack_cooldown = irandom_range(300, 360); // small desync on spawn
-engage_delay = irandom_range(330,360)
+attack_cooldown = irandom_range(330, 390); // small desync on spawn
+engage_delay = irandom_range(360,390)
 //throw parameters (
-throw_windup_frames = 15; // frames to “wind up” before rock spawns
+throw_windup_frames = 20; // frames to “wind up” before rock spawns
 throw_timer = 0;  // counts down during a windup
 
 rock_damage = contact_damage; // damage dealt on hit 
 rock_speed = 2.85; // initial horizontal speed
-rock_gravity = 0.18;// pixels/frame^2 for a lob arc
-rock_spread = 30; // slight random aim spread in degrees
+rock_gravity = 0.21;// pixels/frame^2 for a lob arc
+rock_spread = 88; // slight random aim spread in degrees
 
 // spawn offset near a front tentacle
 rock_offx = -28;

@@ -1,10 +1,13 @@
 function scr_popup_from_cursor_points(){
+    // Read amount safely even if no params are declared
     var _amount = (argument_count > 0) ? argument0 : 0;
 
+    // Find controller & cursor
     var gc   = instance_exists(o_game_controller) ? instance_find(o_game_controller, 0) : noone;
     var spot = instance_exists(o_Spotlight)        ? instance_find(o_Spotlight, 0)        : noone;
     if (!instance_exists(gc) || !instance_exists(spot)) return;
 
+    // ROOM → GUI conversion so popup sticks to screen
     var cam = view_camera[0];
     var vx  = camera_get_view_x(cam), vy = camera_get_view_y(cam);
     var vw  = camera_get_view_width(cam), vh = camera_get_view_height(cam);
@@ -13,15 +16,15 @@ function scr_popup_from_cursor_points(){
     var gui_x = ((spot.x - vx) / vw) * gw;
     var gui_y = ((spot.y - vy) / vh) * gh;
 
+    // Build popup (LEFT side of cursor, blue)
     var pop = {
-        text:  "+" + string(_amount) + "Pts",
+        text:  "+" + string(_amount) + " Pts",
         x:     gui_x + 65,
-        y:     gui_y - 5,
+        y:     gui_y + 5,
         ttl:   60,
         vy:   -0.4,
         alpha: 1,
-        col:   make_colour_rgb(35, 153, 180)
+        col:   make_color_rgb(74, 177, 208)
     };
     array_push(gc.popups, pop);
-
 }

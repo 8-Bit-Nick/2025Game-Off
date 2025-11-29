@@ -4,6 +4,9 @@ just_attacked = false;
 if (variable_global_exists("leveling") && global.leveling){
     exit;
 }
+if (variable_global_exists("paused") && global.paused){
+    exit;
+}
 if (!variable_instance_exists(id, "hit_flash")) hit_flash = 0;
 
 // decay the flash timer if active
