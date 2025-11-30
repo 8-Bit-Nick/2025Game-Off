@@ -34,10 +34,10 @@ function scr_upgrades_get_bucket() {
         rarity: "epic",
         icon:  spr_icon_explode,  
         tiers: [
-        { enemy_explode: true}
+{ enemy_explode: true}
         ],
         desc_fmt:[
-            "Enemies have a 20% chance to explode on death. (Epic)"
+            "Enemies have a 33% chance to explode on death. (Epic)"
         ]
 });
     

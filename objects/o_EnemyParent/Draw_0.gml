@@ -9,7 +9,7 @@ if(hit_flash > 0){
 if (hurt_timer > 0) {
     draw_self();
 
-    // 2) Additive “flash” on top (very quick & bright)
+    // Additive “flash” on top (very quick & bright)
     gpu_set_blendmode(bm_add)
     draw_self();
     gpu_set_blendmode(bm_normal)

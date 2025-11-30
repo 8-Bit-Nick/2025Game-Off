@@ -1,5 +1,5 @@
 sprite_index = choose(spr_Boat,spr_Boat_1,spr_Boat_2);
-max_hp = 100;
+max_hp = 150;
 hp = max_hp;
 hit_radius = 18;
 contact_mult = 1.0

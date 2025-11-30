@@ -52,7 +52,6 @@ global.mouse_room_y = y;
 // Convert DPS 
 var fps_local = variable_global_exists("FPS") ? max(1, global.FPS) : 60;
 
-
 spot_radius = ef_radius;                    
 dmg_tick = ef_dps / fps_local;             
 blind_linger_frames_i = round(0.30 * fps_local);      

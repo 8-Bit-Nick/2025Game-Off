@@ -13,7 +13,7 @@ cur_len_px = 0; //Current beam length (pixels)
 
 // Appearance 
 beam_width_px = 0;
-beam_alpha = .10;
+beam_alpha = .28;
 
 //Rotation
 max_rot_dps = 100000; //Max rotation in degree per sec

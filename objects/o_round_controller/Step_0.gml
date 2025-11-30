@@ -22,9 +22,9 @@ var I = max(0, I_scalar - 1.0); // 0 at 100%, 1 at 200%, 2 at 300%...
 var I1 = clamp(I, 0, 1); // reuse your 0..1 tuning up to 200%
 var extra = max(0, I - 1); // beyond 200%
 // Early-game dampener: at 0% intensity, use 50% of the ramp; 
-var early_dampen = lerp(0.45, 1.00, clamp(I / 0.65, 0, 1));
+var early_dampen = lerp(0.30, 1.00, clamp(I / 0.55, 0, 1));
 // Use softened ramp for all “up to 200%” terms
-var I1_soft = (I1 * (early_dampen * 1.1));
+var I1_soft = (I1 * (early_dampen*1.1));
 
 
 difficulty_01 = clamp(elapsed_frames / (fps_local * 360), 0, 2);
@@ -84,8 +84,8 @@ if (!at_cap && spawn_cd[0] <= 0) {
         var e = instance_create_layer(p.x, p.y, "Enemies", T.obj);
 
         // scaling: keep your shapes; allow linear tail beyond 200%
-        var hp_scaled  = round(T.hp  * (1 + 0.60 * I1_soft + 0.20 * extra));
-        var spd_scaled = T.spd * (1 + 0.2 * I1_soft + 0.1 * extra);
+        var hp_scaled  = round(T.hp  * (1 + .8 * I1_soft + 0.35 * extra));
+        var spd_scaled = T.spd * (1 + 0.22 * I1_soft + 0.1 * extra);
         var xp_scaled  = round(T.xp  * (1 + 0.75 * I1_soft + 0.5 * extra));
         var pt_scaled  = round(T.points * (1 + 2.25 * difficulty_01));
         var dmg_scaled = round(T.contact_damage * dif.damage_mult);
@@ -101,7 +101,7 @@ if (!at_cap && spawn_cd[0] <= 0) {
 
     // cooldown: taper to 0.55 by 200%; no faster beyond
     var next_seconds = T.base + random_range(-T.variance, T.variance);
-    var cadence      = lerp(1.0, 0.55, I1_soft);
+    var cadence      = lerp(1.0, 0.45, I1_soft);
     spawn_cd[0]      = max(10, round(next_seconds * cadence * fps_local));
 }
 #endregion
@@ -122,8 +122,8 @@ if (!at_cap && spawn_cd[1] <= 0) {
         var p2 = scr_get_spawn_boatsafe(16, 16, 96);
         var e2 = instance_create_layer(p2.x, p2.y, "Enemies", F.obj);
 
-        var hp_scaled2  = round(F.hp  * (1 + 1.65 * I1_soft + 0.4 * extra));
-        var spd_scaled2 = F.spd * (1 + 0.25 * I1_soft + 0.10 * extra);
+        var hp_scaled2  = round(F.hp  * (1 + 1.25 * I1_soft + 0.65 * extra));
+        var spd_scaled2 = F.spd * (1 + 0.25 * I1_soft + 0.15 * extra);
         var xp_scaled2  = round(F.xp  * (1 + 0.75 * I1_soft + 0.5 * extra));
         var pt_scaled2  = round(F.points * (1 + 2.25 * difficulty_01));
         var dmg_scaled2 = round(F.contact_damage * (dif.damage_mult * 2));
@@ -158,8 +158,8 @@ if (!at_cap && spawn_cd[2] <= 0) {
         var p3 = scr_get_spawn_boatsafe(36, 36, 96);
         var e3 = instance_create_layer(p3.x, p3.y, "Enemies", R.obj);
 
-        var hp_scaled3  = round(R.hp  * (1 + 1.0 * I1_soft + 0.27 * extra));
-        var spd_scaled3 =        R.spd * (1 + 0.22 * I1_soft + 0.15 * extra);
+        var hp_scaled3  = round(R.hp  * (1 + 1.15 * I1_soft + 0.35 * extra));
+        var spd_scaled3 =        R.spd * (1 + 0.2 * I1_soft + 0.15 * extra);
         var xp_scaled3  = round(R.xp  * (1 + 0.75 * I1_soft + 0.5 * extra));
         var pt_scaled3  = round(R.points * (1 + 3.00 * difficulty_01));
         var dmg_scaled3 = round(R.contact_damage * (dif.damage_mult * 1.75));

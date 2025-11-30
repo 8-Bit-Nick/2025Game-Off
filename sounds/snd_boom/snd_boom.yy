@@ -10,7 +10,7 @@
   "compression":0,
   "compressionQuality":4,
   "conversionMode":0,
-  "duration":1.1759864,
+  "duration":8.04,
   "exportDir":"",
   "name":"snd_boom",
   "parent":{

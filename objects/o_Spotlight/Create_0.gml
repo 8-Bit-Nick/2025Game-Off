@@ -1,15 +1,15 @@
 //Base Stats
-radius_px = 20;
-dps = 25;
+radius_px = 16;
+dps = 30;
 crit_chance = 0;
 crit_mult = 1.6;
 base_radius_px = radius_px;
 blind_linger_frames_i = 45;
 //Sprite Stuff
 sprite_index = spr_Spotlight;
-image_alpha = .58;
+image_alpha = .35;
 spotlight_alpha = image_alpha;
-sprite_base_diameter = 36;
+sprite_base_diameter = 32;
 
 // Replacing Cursor
 window_set_cursor(cr_none);

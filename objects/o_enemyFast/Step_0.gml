@@ -9,3 +9,4 @@ if (just_attacked) {
     image_speed   = 0.85; // tweak
 }
 
+

@@ -25,3 +25,4 @@ rock_offy = -6;
 base_anim_speed = image_speed;
 
 explosion_taken = false;
+explosion_timer = 5;

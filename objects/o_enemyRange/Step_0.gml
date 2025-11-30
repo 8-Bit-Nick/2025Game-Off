@@ -29,6 +29,14 @@ if (slow_t > 0){
 } else{
     slow_factor = 1.0;
 }
+
+// reset timer for volatile dmg
+if (explosion_timer > 0){
+    explosion_timer -=1;
+    if (explosion_timer <=0){
+        explosion_taken = false;
+    }
+}
 // Acquire / maintain a specific boat target
 var boat_parent_obj = asset_get_index("o_Boat_Parent"); // adjust if your boat parent name differs
 if (boat_parent_obj == -1 || !instance_exists(boat_parent_obj)) exit; // no boats = nothing to chase
@@ -222,7 +230,7 @@ if (hp <= 0) {
     if (variable_global_exists("run_stats") && is_struct(global.run_stats)){
         global.run_stats.kills +=1;
     }
-    if (variable_global_exists("enemy_explode") && global.enemy_explode) && (irandom(4) == 0){
+    if (variable_global_exists("enemy_explode") && global.enemy_explode) && (irandom(2) == 0){
         instance_create_layer(x, y, "Enemies", o_enemy_explode);
         instance_destroy();
         }else{

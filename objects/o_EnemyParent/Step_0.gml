@@ -159,7 +159,7 @@ if (hp <= 0) {
     if (variable_global_exists("run_stats") && is_struct(global.run_stats)){
         global.run_stats.kills +=1;
     }
-    if (variable_global_exists("enemy_explode") && global.enemy_explode) && (irandom(4) == 0){
+    if (variable_global_exists("enemy_explode") && global.enemy_explode) && (irandom(2) == 0){
         instance_create_layer(x, y, "Enemies", o_enemy_explode);
         instance_destroy();
         }else{

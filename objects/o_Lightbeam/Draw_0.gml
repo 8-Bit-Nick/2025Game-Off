@@ -5,7 +5,7 @@ var L = cur_len_px;        // current beam length (pixels)
 var a = cur_dir_deg;       // current beam angle (degrees)
 
 //Set widths
-var far_w   = spotlight.ef_radius * 2 - 10; // far end matches the spotlight diameter
+var far_w   = spotlight.ef_radius * 2 - 4 ; // far end matches the spotlight diameter
 var near_w  = max(2, far_w * 0.45);    // taper near lighthouse % of larger end
 
 //Build trapezoid corners in world space
@@ -29,6 +29,6 @@ var flx = cx1 + nx * hw1, fly = cy1 + ny * hw1; // far-left
 draw_sprite_pos(spr_beam, 0, flx, fly, frx, fry, nrx, nry, nlx, nly, beam_alpha);
 
 // Subtle Glow
-gpu_set_blendmode(bm_add);
-draw_sprite_pos(spr_beam, 0, nlx, nly, nrx, nry, frx, fry, flx, fly, beam_alpha * 0.35);
-gpu_set_blendmode(bm_normal);
+//gpu_set_blendmode(bm_add);
+//draw_sprite_pos(spr_beam, 0, nlx, nly, nrx, nry, frx, fry, flx, fly, beam_alpha * 0.35);
+//gpu_set_blendmode(bm_normal);
