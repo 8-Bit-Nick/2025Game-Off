@@ -4,9 +4,10 @@ var fps_local = variable_global_exists("FPS") ? max(1,global.FPS) : 60;
 
 if (state == "idle" && variable_global_exists("leveling") && global.leveling) {
     // UI startup: hide spotlight visuals & switch to normal cursor
-    if (instance_exists(spotlight)) spotlight.visible = false;
-    window_set_cursor(cr_none)
     cursor_sprite = spr_Spotlight;
+    window_set_cursor(cursor_sprite);
+    var mx = (variable_global_exists("mouse_room_x")) ? global.mouse_room_x : mouse_x;
+    var my = (variable_global_exists("mouse_room_y")) ? global.mouse_room_y : mouse_y;
 
     // Begin fading in the dim background
     state       = "fade_in";
@@ -53,15 +54,39 @@ if (state == "show" && array_length(cards) == 0) {
 
     // Build list of all upgrade indices, shuffle
     var candidates = ds_list_create();
-    for (var i = 0; i < array_length(bucket); i++) ds_list_add(candidates, i);
-    ds_list_shuffle(candidates);
+        for (var i = 0; i < array_length(bucket); i++) {
+        var allow = true;
 
+    // If Volatile Core already taken, never offer it again
+        if (bucket[i].id == "volatile_core" &&  variable_global_exists("enemy_explode") && global.enemy_explode){
+            allow = false;
+            }
+            if (allow) ds_list_add(candidates, i);
+            }
+    ds_list_shuffle(candidates);
     // Pick up to 3 unique upgrades
     var picks = [];
     var want = min(3, ds_list_size(candidates));
     for (var k = 0; k < want; k++) array_push(picks, candidates[| k]);
     ds_list_destroy(candidates);
 
+    // enemy explode
+   if (!(variable_global_exists("enemy_explode") && global.enemy_explode)) {
+    var vol_idx = -1;
+    for (var ii = 0; ii < array_length(bucket); ii++) {
+        if (bucket[ii].id == "volatile_core") { vol_idx = ii; break; }
+    }
+    if (vol_idx != -1) {
+        var already = false;
+        for (var jj = 0; jj < array_length(picks); jj++) {
+            if (picks[jj] == vol_idx) { already = true; break; }
+        }
+        if (!already && irandom(14) == 0 && array_length(picks) > 0) {
+            var slot = irandom(array_length(picks) - 1);
+            picks[slot] = vol_idx;
+        }
+    }
+}
     // Spawn cards; each rolls its own tier with 60/30/10 odds
     for (var j = 0; j < array_length(picks); j++) {
         var idx = picks[j];

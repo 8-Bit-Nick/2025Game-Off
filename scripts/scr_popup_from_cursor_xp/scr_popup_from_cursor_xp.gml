@@ -16,7 +16,7 @@ function scr_popup_from_cursor_xp(){
     var gui_x = ((spot.x - vx) / vw) * gw;
     var gui_y = ((spot.y - vy) / vh) * gh;
 
-    // Build popup (right side of cursor, blue)
+    // Build popup 
     var pop = {
         text:  "+" + string(_amount) + " XP",
         x:     gui_x - 65,

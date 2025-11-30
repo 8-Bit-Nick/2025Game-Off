@@ -222,9 +222,14 @@ if (hp <= 0) {
     if (variable_global_exists("run_stats") && is_struct(global.run_stats)){
         global.run_stats.kills +=1;
     }
-    instance_destroy();
-    instance_create_layer(x, y, "Enemies", o_Enemy_Die)
-    audio_play_sound(snd_enemy_death,10,false,.13,undefined,2)
+    if (variable_global_exists("enemy_explode") && global.enemy_explode) && (irandom(4) == 0){
+        instance_create_layer(x, y, "Enemies", o_enemy_explode);
+        instance_destroy();
+        }else{
+        instance_create_layer(x,y,"Enemies", o_Enemy_Die);
+        instance_destroy();
+        exit;
+}
 }
 
 #endregion

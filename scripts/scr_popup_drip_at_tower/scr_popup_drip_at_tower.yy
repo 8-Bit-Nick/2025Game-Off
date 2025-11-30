@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_popup_drip_at_tower",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_popup_drip_at_tower",
+  "parent":{
+    "name":"UI",
+    "path":"folders/Scripts/UI.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

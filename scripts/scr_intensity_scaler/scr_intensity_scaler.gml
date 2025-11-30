@@ -8,8 +8,8 @@ var mins   = secs / 60;
 
 // Tunable growth: every X minutes ≈ +100% intensity.
 // If you previously reached 200% around 3:00, keep 3.0 and add *1.10 for +10% faster.
-var MIN_PER_STEP = 3.50;     // +100% per 3 minutes (baseline)
-var growth       = (mins / MIN_PER_STEP) * 1.10; // +faster scaling
+var MIN_PER_STEP = 4;     // +100% per Xmin
+var growth       = (mins / MIN_PER_STEP) * .95; // scaling speed
 
 return 1.0 + max(0, growth);   // 1.0 = 100%, 2.0 = 200%, no cap
 

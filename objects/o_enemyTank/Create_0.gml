@@ -14,3 +14,4 @@ sprite_index  = spr_idle;
 
 is_attacking      = false; // visual state
 _prev_cooldown    = 0;     // to detect attack
+explosion_taken = false;

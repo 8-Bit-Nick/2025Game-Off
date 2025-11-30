@@ -18,13 +18,13 @@ var fps_local = (variable_instance_exists(id,"frames_per_second") && frames_per_
 // Intensity scalar (uncapped)
 global.intensity_scaler = scr_intensity_scaler();
 var I_scalar = max(1.0, global.intensity_scaler); // 1.0 = 100%, 2.0 = 200%, etc.
-var I        = max(0, I_scalar - 1.0);            // 0 at 100%, 1 at 200%, 2 at 300%...
-var I1       = clamp(I, 0, 1);                    // reuse your 0..1 tuning up to 200%
-var extra    = max(0, I - 1);                      // beyond 200%
+var I = max(0, I_scalar - 1.0); // 0 at 100%, 1 at 200%, 2 at 300%...
+var I1 = clamp(I, 0, 1); // reuse your 0..1 tuning up to 200%
+var extra = max(0, I - 1); // beyond 200%
 // Early-game dampener: at 0% intensity, use 50% of the ramp; 
-var early_dampen = lerp(0.75, 1.00, clamp(I / 0.7, 0, 1));
+var early_dampen = lerp(0.45, 1.00, clamp(I / 0.65, 0, 1));
 // Use softened ramp for all “up to 200%” terms
-var I1_soft = (I1 * (early_dampen * 1.2));
+var I1_soft = (I1 * (early_dampen * 1.1));
 
 
 difficulty_01 = clamp(elapsed_frames / (fps_local * 360), 0, 2);
@@ -34,6 +34,8 @@ var dif = scr_diff_from_d01(difficulty_01);
 if (variable_global_exists("run_stats") && is_struct(global.run_stats)) {
     global.run_stats.intensity_peak = max(global.run_stats.intensity_peak, I_scalar);
 }
+#region Drip Score
+
 
 // Drip points & minute bonuses 
 if (elapsed_frames >= time_drip_next_frame) {
@@ -41,18 +43,22 @@ if (elapsed_frames >= time_drip_next_frame) {
     var drip_gain =  15 * awards;
     global.points += drip_gain;
     time_drip_next_frame += awards * time_drip_interval_frames;
-    var anch = scr_get_tower_anchor();
-    scr_popup_from_cursor_points(drip_gain, anch.x, anch.y, make_color_rgb(120,190,255));
+    scr_popup_drip_at_tower(drip_gain, false);
 }
 var minutes_elapsed = floor(elapsed_frames / (fps_local * 60));
 while (next_bonus_minute <= minutes_elapsed) {
     var award = 50 * power(2, next_bonus_minute - 1);
     global.points += award;
     next_bonus_minute += 1;
-    var anch = scr_get_tower_anchor();
-    scr_popup_from_cursor_points(award, anch.x, anch.y, make_color_rgb(120,190,255));
+    next_bonus_delay += 30;
+    if (next_bonus_delay > 0){
+        next_bonus_delay -=1;
+    }
+    if (next_bonus_delay = 0){
+        scr_popup_drip_at_tower(award, true);
+    }
 }
-
+#endregion
 // Capacity guard 
 var at_cap = (instance_number(o_EnemyParent) >= max_on_field);
 
@@ -74,7 +80,7 @@ if (!at_cap && spawn_cd[0] <= 0) {
         if (at_cap) break;
         if (instance_number(o_EnemyParent) >= max_on_field) { at_cap = true; break; }
 
-        var p = scr_get_spawn_boatsafe(22, 22, 96);
+        var p = scr_get_spawn_boatsafe(36, 36, 96);
         var e = instance_create_layer(p.x, p.y, "Enemies", T.obj);
 
         // scaling: keep your shapes; allow linear tail beyond 200%
@@ -113,7 +119,7 @@ if (!at_cap && spawn_cd[1] <= 0) {
         if (at_cap) break;
         if (instance_number(o_EnemyParent) >= max_on_field) { at_cap = true; break; }
 
-        var p2 = scr_get_spawn_boatsafe(22, 22, 96);
+        var p2 = scr_get_spawn_boatsafe(16, 16, 96);
         var e2 = instance_create_layer(p2.x, p2.y, "Enemies", F.obj);
 
         var hp_scaled2  = round(F.hp  * (1 + 1.65 * I1_soft + 0.4 * extra));
@@ -149,7 +155,7 @@ if (!at_cap && spawn_cd[2] <= 0) {
         if (at_cap) break;
         if (instance_number(o_EnemyParent) >= max_on_field) { at_cap = true; break; }
 
-        var p3 = scr_get_spawn_boatsafe(22, 22, 96);
+        var p3 = scr_get_spawn_boatsafe(36, 36, 96);
         var e3 = instance_create_layer(p3.x, p3.y, "Enemies", R.obj);
 
         var hp_scaled3  = round(R.hp  * (1 + 1.0 * I1_soft + 0.27 * extra));

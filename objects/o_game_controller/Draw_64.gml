@@ -1,5 +1,4 @@
 // Cursor Pop-ups
-
 for (var i = 0; i < array_length(popups); i++) {
     var p = popups[i];
 
@@ -17,8 +16,8 @@ for (var i = 0; i < array_length(popups); i++) {
 
     draw_set_alpha(1);
 }
-if (room = rm_Main){
 #region Ability Tray
+if (room = rm_Main){
 //  Placement under the timer 
 var gui_w = display_get_gui_width();
 
@@ -105,9 +104,9 @@ function _cd_mask(_x1, _y1, _x2, _y2, _pct) {
 // Draw the masks last so they sit on top of icons/letters
 _cd_mask(s1x1+4, s1y1+8, s1x2+1, s1y2-2, q_pct);
 _cd_mask(s2x1+2, s2y1+8, s2x2, s2y2-2, w_pct);
-
+}
 #endregion
-    }
+    
 #region Title Screen Bests
    if (room = rm_Title){ 
     // Title: show saved records

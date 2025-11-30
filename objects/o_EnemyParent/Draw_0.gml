@@ -44,13 +44,7 @@ if (stun_timer > 0 && sprite_exists(spr_stun_icon) && sprite_exists(sprite_index
     // Draw the star with a gentle bob (no color tinting)
     gpu_set_blendmode(bm_normal);
     draw_set_alpha(1);
-    draw_sprite_ext(
-        spr_stun_icon, 0,
-        hx + ox, hy + oy,
-        1, 1,
-        stun_orbit_ang,   // a little spin looks nice
-        c_white, 1
-    );
+    draw_sprite_ext(spr_stun_icon, 0, hx + ox, hy + oy,1, 1,stun_orbit_ang,c_white, 1);
 }
 //Hp bar (placeholder)
 if (global.DEBUG) {

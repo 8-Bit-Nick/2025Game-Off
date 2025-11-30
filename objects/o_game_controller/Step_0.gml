@@ -1,3 +1,5 @@
+var mx = (variable_global_exists("mouse_room_x")) ? global.mouse_room_x : mouse_x;
+var my = (variable_global_exists("mouse_room_y")) ? global.mouse_room_y : mouse_y;
 if (variable_global_exists("leveling") && global.leveling){
     exit;
 }

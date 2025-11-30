@@ -1,6 +1,6 @@
 //Base Stats
 radius_px = 20;
-dps = 22;
+dps = 25;
 crit_chance = 0;
 crit_mult = 1.6;
 base_radius_px = radius_px;

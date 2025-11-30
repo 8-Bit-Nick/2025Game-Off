@@ -28,6 +28,19 @@ function scr_upgrades_get_bucket() {
             "Increase Spotlight damage by +20%. (Epic)"
         ]
     });
+    array_push(bucket,{
+        id:    "volatile_core",
+        name: "Volatile Core",
+        rarity: "epic",
+        icon:  spr_icon_explode,  
+        tiers: [
+        { enemy_explode: true}
+        ],
+        desc_fmt:[
+            "Enemies have a 20% chance to explode on death. (Epic)"
+        ]
+});
+    
 
     //Wide Lens (Radius up)
     array_push(bucket, {

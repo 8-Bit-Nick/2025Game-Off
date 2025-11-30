@@ -38,5 +38,7 @@ stun_orbit_speed = 8; // degrees per frame (tweak 4–8)
 stun_orbit_radius = 8; // pixels around the head
 stun_star_height = - (sprite_get_height(sprite_index) * 0.5 + 6); // sit above head
 
-// cache the icon sprite id now
-spr_stun_icon = asset_get_index("spr_stun"); 
+// cache the icon sprite id 
+spr_stun_icon = asset_get_index(spr_stun); 
+explosion_taken = false;
+explosion_timer = 5;

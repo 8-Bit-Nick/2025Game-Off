@@ -32,6 +32,9 @@ global.points = 0;
 global.survive_frames = 0;
 global.crit_chance_total = 0;
 
+//enemy explode
+global.enemy_explode = false;
+
 
 
 //Gameover / Summary

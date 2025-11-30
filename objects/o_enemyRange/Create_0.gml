@@ -4,7 +4,7 @@ stop_margin_px = 180;
 ranged_ai = true;
 enemy_radius = 26;
 // combat tuning 
-contact_damage = 10; // set by spawner
+contact_damage = 0; // set by spawner
 attack_rate_frames = 135; // throw - 60=1s
 attack_cooldown = irandom_range(330, 390); // small desync on spawn
 engage_delay = irandom_range(360,390)
@@ -23,3 +23,5 @@ rock_offy = -6;
 
 // Keep base anim speed from parent for stun/unfreeze restore
 base_anim_speed = image_speed;
+
+explosion_taken = false;

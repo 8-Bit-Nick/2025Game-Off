@@ -9,7 +9,7 @@ if (room = rm_Title){
             hold -= 1;
             if (hold <= 0) {
                 audio_stop_all();
-                room_goto(rm_Main);
+                room_goto(rm_Main)
             }
             break;
     }

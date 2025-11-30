@@ -7,7 +7,6 @@ var g_h = display_get_height();
 
 
 
-move_and_collide(x,y,o_col_SL)
 
 #region Overcharge
 //Find Game controller
@@ -33,8 +32,22 @@ ef_alpha = oc_on ? min(1, spotlight_alpha + 0.35) : spotlight_alpha;
 #region Mouse tracking and damage
 
 // Follow the mouse in ROOM space
-x = mouse_x;
-y = mouse_y;
+var mx = mouse_x;
+var my = mouse_y;
+
+var cam = view_camera[0];
+var vx  = camera_get_view_x(cam);
+var vy  = camera_get_view_y(cam);
+var vw  = camera_get_view_width(cam);
+var vh  = camera_get_view_height(cam);
+
+// keep the entire light circle on-screen, even when radius changes
+var pad = ef_radius; // 
+
+x = clamp(mx, vx + pad, vx + vw - pad);
+y = clamp(my, vy + pad, vy + vh - pad);
+global.mouse_room_x = x;
+global.mouse_room_y = y;
 
 // Convert DPS 
 var fps_local = variable_global_exists("FPS") ? max(1, global.FPS) : 60;
@@ -96,7 +109,7 @@ with (o_EnemyParent) {
         slow_t = max(slow_t, 2);
         slow_factor = min(slow_factor, 0.75);
 
-        // Optional: keep your existing blind timer for visual tint only
+        // visual tint blind timer
         if (!variable_instance_exists(id, "blind_timer")) blind_timer = 0;
         blind_timer = max(blind_timer, other.blind_linger_frames_i);
     }
