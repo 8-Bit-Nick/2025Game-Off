@@ -17,6 +17,10 @@ var fps_local = (variable_instance_exists(id,"frames_per_second") && frames_per_
 // Intensity scalar (uncapped)
 global.intensity_scaler = scr_intensity_scaler();
 var I_scaler = (variable_global_exists("intensity_scaler") && global.intensity_scaler > 0)? global.intensity_scaler: 1.0;
+var scaler = (variable_global_exists("intensity_scaler") && global.intensity_scaler > 0)
+    ? global.intensity_scaler : 1.0;
+var intensity_over = max(0, scaler - 1.0);
+
 var I = max(0, I_scaler - 1.0); // 0 at 100%, 1 at 200%, 2 at 300%...
 var I1 = clamp(I, 0, 1); // reuse your 0..1 tuning up to 200%
 var extra = max(0, I - 1); // beyond 200%

@@ -57,7 +57,7 @@ var score_txt = (rs != noone) ? string(rs.score_final) : "0";
 var kills_txt = (rs != noone) ? string(rs.kills)       : "0";
 
 // Intensity is stored as scaler (1.0 = 100%)
-var intensity_pct = (rs != noone) ? round(max(0, rs.intensity_peak) * 100) : 100;
+var intensity_pct = (rs != noone) ? round(max(0, rs.intensity_peak-1) * 100) : 0;
 
 var level_peak  = (rs != noone) ? rs.level_peak : 1;
 var dmg_total   = (rs != noone) ? rs.dmg_total  : 0;

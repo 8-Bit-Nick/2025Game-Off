@@ -141,3 +141,4 @@ _cd_mask(s2x1+2, s2y1+8, s2x2, s2y2-2, w_pct);
     draw_text(tx-784, ty-42, "Best Time: " + mm_s + ":" + ss_s +"                      " + " Highscore: " + string(best_pts) + " pts");
 }
     #endregion
+

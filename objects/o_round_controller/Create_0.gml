@@ -20,13 +20,13 @@ state = "running";
 //    Fields: { obj, base interval (sec), variance (sec), burst_min, burst_max, base_hp, base_spd, base_xp }
 enemy_types = [
     // Tank: slower, tougher baseline trickle
-    { obj:o_enemyTank,  base:9.65, variance:.35, burst_min:2, burst_max:3, hp:40, spd:0.24, xp:10, points:15, contact_damage:14},
+    { obj:o_enemyTank,  base:9.1, variance:.35, burst_min:2, burst_max:3, hp:40, spd:0.24, xp:10, points:15, contact_damage:14},
 
     // Fast: quicker cadence, smaller bursts, lower HP but more pressure
     { obj:o_enemyFast,  base:4, variance:.22, burst_min:2, burst_max:4, hp:15, spd:.45, xp:5, points:10, contact_damage:5},
 
     // Ranged: med sped, throws boulder
-    { obj:o_enemyRange, base: 10.25, variance:.35, burst_min:2, burst_max:3, hp:30, spd:.33, xp:15, points:20, contact_damage:10}
+    { obj:o_enemyRange, base: 9.8, variance:.35, burst_min:2, burst_max:3, hp:30, spd:.33, xp:15, points:20, contact_damage:10}
 ];
 
 // Per-type spawn cooldowns (FRAMES), randomized from base ± variance
