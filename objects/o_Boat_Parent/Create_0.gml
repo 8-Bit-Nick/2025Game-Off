@@ -9,3 +9,4 @@ body_h = 52;
 image_xscale = 1.5;
 image_yscale = 1.5;
 hit_flash = 0;
+image_speed = .84;
