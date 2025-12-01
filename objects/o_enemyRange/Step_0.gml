@@ -60,12 +60,19 @@ if (stun_timer > 0) {
     stun_orbit_ang = (stun_orbit_ang + stun_orbit_speed) mod 360;
     if (hp <= 0) {
         scr_xp_add(xp_value);// Set by spawner
-        scr_add_Highscore(points);// set by spawner
+    scr_add_Highscore(points);// set by spawner
+    if (variable_global_exists("run_stats") && is_struct(global.run_stats)){
+        global.run_stats.kills +=1;
+    }
+    if (variable_global_exists("enemy_explode") && global.enemy_explode) && (irandom(2) == 0){
+        instance_create_layer(x, y, "Enemies", o_enemy_explode);
         instance_destroy();
-        instance_create_layer(x, y, "Enemies", o_Enemy_Die)
+        }else{
+        instance_create_layer(x,y,"Enemies", o_Enemy_Die);
+        instance_destroy();
+        
 }
-    
-exit;
+    } exit
 } else {
     image_speed = base_anim_speed;
 }
@@ -122,8 +129,8 @@ in_melee_range = false;
     }
 if (ranged_ai){
     // range to hover around
-var min_range = 180;
-var max_range = 220;
+var min_range = 120;
+var max_range = 150;
 
 // Camera/on-screen check
 var cam = view_camera[0];

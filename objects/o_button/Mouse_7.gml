@@ -35,6 +35,7 @@ switch (button_id) {
     case 4:
         audio_play_sound(snd_button,1,false,0.4)
         layer_set_visible("Title_UI",false);
+        scr_run_reset_stats();
         instance_create_layer(x,y,"Instances",o_fade_controller)
         break;
     

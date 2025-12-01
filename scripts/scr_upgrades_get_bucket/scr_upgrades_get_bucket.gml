@@ -20,12 +20,12 @@ function scr_upgrades_get_bucket() {
         tiers: [
             { dps_mul: 1.05 },
             { dps_mul: 1.10 },
-            { dps_mul: 1.20 }
+            { dps_mul: 1.15 }
         ],
         desc_fmt: [
             "Increase Spotlight damage by +5%. (Common)",
             "Increase Spotlight damage by +10%. (Rare)",
-            "Increase Spotlight damage by +20%. (Epic)"
+            "Increase Spotlight damage by +15%. (Epic)"
         ]
     });
     array_push(bucket,{
@@ -34,9 +34,13 @@ function scr_upgrades_get_bucket() {
         rarity: "epic",
         icon:  spr_icon_explode,  
         tiers: [
-{ enemy_explode: true}
+        {},
+        {},
+        {enemy_explode: true}
         ],
         desc_fmt:[
+            "",
+            "",
             "Enemies have a 33% chance to explode on death. (Epic)"
         ]
 });
@@ -48,14 +52,14 @@ function scr_upgrades_get_bucket() {
         name: "Wider Lens",
         icon: spr_icon_wl,
         tiers: [
-            { radius_mul: 1.08 },
-            { radius_mul: 1.15 },
-            { radius_mul: 1.25 }
+            { radius_mul: 1.05 },
+            { radius_mul: 1.10 },
+            { radius_mul: 1.15 }
         ],
         desc_fmt: [
-            "Increase Spotlight radius by +8%. (Common)",
-            "Increase Spotlight radius by +15%. (Rare)",
-            "Increase Spotlight radius by +25%. (Epic)"
+            "Increase Spotlight radius by +5%. (Common)",
+            "Increase Spotlight radius by +10%. (Rare)",
+            "Increase Spotlight radius by +15%. (Epic)"
         ]
     });
 
@@ -84,12 +88,12 @@ function scr_upgrades_get_bucket() {
         tiers: [
             { blind_power_add: 0.10, blind_linger_mul: 1.10 }, // base slow 0.80 → 0.70
             { blind_power_add: 0.15, blind_linger_mul: 1.15 }, // → 0.65
-            { blind_power_add: 0.20, blind_linger_mul: 1.20 }  // → 0.60
+            { blind_power_add: 0.20, blind_linger_mul: 1.25 }  // → 0.60
         ],
         desc_fmt: [
             "Spotlight inflicts a stronger slow (+10%). (Common)",
             "Spotlight inflicts a stronger slow (+15%). (Rare)",
-            "Spotlight inflicts a stronger slow (+20%). (Epic)."
+            "Spotlight inflicts a stronger slow (+25%). (Epic)."
         ]
     });
 
@@ -99,7 +103,7 @@ function scr_upgrades_get_bucket() {
         name: "Scholar",
         icon: spr_icon_sch,
         tiers: [
-            { xp_mul: 1.05 },
+            { xp_mul: 1.5 },
             { xp_mul: 1.10 },
             { xp_mul: 1.20 }
         ],
@@ -116,14 +120,14 @@ function scr_upgrades_get_bucket() {
         name: "Fresh Coat",
         icon: spr_icon_fc,
         tiers: [
-            { tower_hp_mul: 1.10, tower_heal_mul: 0.10 },
-            { tower_hp_mul: 1.20, tower_heal_mul: 0.20 },
-            { tower_hp_mul: 1.30, tower_heal_mul: 0.30 }
+            { tower_hp_mul: 1.10, tower_heal_mul: 0.15},
+            { tower_hp_mul: 1.20, tower_heal_mul: 0.30 },
+            { tower_hp_mul: 1.30, tower_heal_mul: 0.45}
         ],
         desc_fmt: [
-            "Boats Max HP +10% and heal 10%. (Common)",
-            "Boats Max HP +20% and heal 20%. (Rare)",
-            "Boats Max HP +30% and heal 30%. (Epic)"
+            "Boats Max HP +10% and heal 15%. (Common)",
+            "Boats Max HP +20% and heal 30%. (Rare)",
+            "Boats Max HP +30% and heal 45%. (Epic)"
         ]
     });
 

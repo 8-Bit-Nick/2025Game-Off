@@ -10,8 +10,8 @@
   "name":"o_enemy_explode",
   "overriddenProperties":[],
   "parent":{
-    "name":"Enemies",
-    "path":"folders/Objects/Enemies.yy",
+    "name":"enemycontrols",
+    "path":"folders/Objects/Enemies/enemycontrols.yy",
   },
   "parentObjectId":null,
   "persistent":false,

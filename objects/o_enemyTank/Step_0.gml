@@ -6,4 +6,6 @@ if (just_attacked) {
     sprite_index  = spr_attack;
     image_index   = 0;
     image_speed   = 0.85; // tweak
+} else {
+    sprite_index = spr_idle;
 }

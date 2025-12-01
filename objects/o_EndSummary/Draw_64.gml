@@ -1,13 +1,13 @@
 
 var saved_alpha = draw_get_alpha();
-var saved_col   = draw_get_colour();
+var saved_col   = draw_get_color();
 
 // Backdrop
 draw_set_alpha(0.85);
-draw_set_colour(c_black);
+draw_set_color(c_black);
 draw_rectangle(0, 0, display_get_gui_width(), display_get_gui_height(), false);
 draw_set_alpha(1);
-draw_set_colour(c_black);
+draw_set_color(c_black);
 
 // Draw the 9-slice panel centered
 if (sprite_exists(spr_end_panel)) {
@@ -18,15 +18,17 @@ if (sprite_exists(spr_end_panel)) {
         c_white, 1
     );
 } else {
-    draw_set_colour(make_color_rgb(24, 44, 52));
+    draw_set_color(make_color_rgb(24, 44, 52));
     draw_rectangle(panel_x, panel_y, panel_x + panel_w, panel_y + panel_h, false);
-    draw_set_colour(c_white);
+    draw_set_color(c_white);
 }
-//borders for sprite
-border_l = 10;
-border_r = 10;
-border_t = 10;
-border_b = 10;
+
+// borders for sprite (local so they don't persist)
+var border_l = 10;
+var border_r = 10;
+var border_t = 10;
+var border_b = 10;
+
 // Compute an inner “safe” rect inside the teal border + our padding
 var inner_x = panel_x + pad + border_l;
 var inner_y = panel_y + pad + border_t;
@@ -35,7 +37,7 @@ var inner_h = panel_h - (pad * 2) - (border_t + border_b);
 
 // Choose font and set colours
 if (summary_font != -1) draw_set_font(summary_font);
-draw_set_colour(c_black);
+draw_set_color(c_black);
 
 // Pull run stats safely
 var rs = (variable_global_exists("run_stats") && is_struct(global.run_stats)) ? global.run_stats : noone;
@@ -53,24 +55,23 @@ var timer_text = mm_str + ":" + ss_str;
 // Other values
 var score_txt = (rs != noone) ? string(rs.score_final) : "0";
 var kills_txt = (rs != noone) ? string(rs.kills)       : "0";
-var intensity_pct = (rs != noone) ? round(rs.intensity_peak * 100) : 0; 
+
+// Intensity is stored as scaler (1.0 = 100%)
+var intensity_pct = (rs != noone) ? round(max(0, rs.intensity_peak) * 100) : 100;
+
 var level_peak  = (rs != noone) ? rs.level_peak : 1;
-var dmg_total  = (rs != noone) ? rs.dmg_total  : 0;
+var dmg_total   = (rs != noone) ? rs.dmg_total  : 0;
 
-var crit_pct = (rs != noone) ? round( rs.crit_chance_total * 100 ) : 0;
-var bulb_pct = (rs != noone) ? round( (rs.bulb_mult    - 1.0) * 100 ) : 0;
-var lens_pct = (rs != noone) ? round( (rs.lens_mult    - 1.0) * 100 ) : 0;
-var scholar_pct = (rs != noone) ? round( (rs.scholar_mult - 1.0) * 100 ) : 0;
+// Upgrade bonuses (multipliers shown as bonus over base; crit is additive chance)
+var crit_pct    = (rs != noone) ? round(max(0, rs.crit_chance_total) * 100) : 0;
+var bulb_pct    = (rs != noone) ? round(max(0, rs.bulb_mult    - 1.0) * 100) : 0;
+var lens_pct    = (rs != noone) ? round(max(0, rs.lens_mult    - 1.0) * 100) : 0;
+var scholar_pct = (rs != noone) ? round(max(0, rs.scholar_mult - 1.0) * 100) : 0;
 
-
-// Crit %
-if (rs.hits_total > 0) crit_pct = round((rs.crit_hits / rs.hits_total) * 100);
-
-// Upgrade contribution %
 
 // Text layout inside inner rect
-var tpos_x = inner_x + 8;
-var tpos_y = inner_y + 6;
+var tpos_x  = inner_x + 8;
+var tpos_y  = inner_y + 6;
 var value_x = inner_x + inner_w - 8;  // right-aligned values
 
 // Helper to draw one label/value row
@@ -83,12 +84,12 @@ function _row_at(_label, _value, _x_label, _y, _x_value) {
 }
 
 // Title
-draw_set_font(fnt_card_title_2)
+draw_set_font(fnt_card_title_2);
 draw_text(tpos_x, tpos_y, "Run Summary: ");
 tpos_y += lineh + title_gap;
 
 // Rows (labels left, values right-aligned)
-draw_set_font(summary_font)
+draw_set_font(summary_font);
 draw_set_halign(fa_left);  draw_text(tpos_x, tpos_y, "Time Survived: ");
 draw_set_halign(fa_right); draw_text(value_x, tpos_y, timer_text);
 tpos_y += lineh;
@@ -115,12 +116,12 @@ tpos_y += lineh + 6;
 
 //  Subheader 
 draw_set_halign(fa_left);
-draw_set_font(fnt_card_title_2)
+draw_set_font(fnt_card_title_2);
 draw_text(tpos_x, tpos_y, "Bonuses From Upgrades: ");
 tpos_y += lineh + title_gap;
 
 // Bonus rows 
-draw_set_font(summary_font)
+draw_set_font(summary_font);
 draw_set_halign(fa_left);  draw_text(tpos_x, tpos_y, "Crit Chance: ");
 draw_set_halign(fa_right); draw_text(value_x, tpos_y, string(crit_pct) + "%");
 tpos_y += lineh;
@@ -139,11 +140,10 @@ tpos_y += lineh;
 
 tpos_y += lineh;
 
-
 // simple header (optional)
-draw_set_font(fnt_card_title_2)
+draw_set_font(fnt_card_title_2);
 draw_set_halign(fa_left);
-draw_text(tpos_x, tpos_y+4, "Records");
+draw_text(tpos_x, tpos_y + 4, "Records");
 tpos_y += lineh;
 tpos_y += lineh;
 
@@ -158,12 +158,14 @@ function _fmt_time_local(_frames) {
     var ss = (s < 10) ? ("0" + string(s)) : string(s);
     return mm + ":" + ss;
 }
-draw_set_font(fnt_card_title_1)
+
+draw_set_font(fnt_card_title_1);
+
 // pull bests + “new record” flags
-var best_pts = (variable_global_exists("best_score")  ? global.best_score : 0);
+var best_pts   = (variable_global_exists("best_score")       ? global.best_score       : 0);
 var best_timef = (variable_global_exists("best_time_frames") ? global.best_time_frames : 0);
-var new_pts = (variable_global_exists("new_best_score") ? global.new_best_score : false);
-var new_time = (variable_global_exists("new_best_time") ? global.new_best_time : false);
+var new_pts    = (variable_global_exists("new_best_score")   ? global.new_best_score   : false);
+var new_time   = (variable_global_exists("new_best_time")    ? global.new_best_time    : false);
 
 // build row strings
 var best_pts_txt  = string(best_pts);
@@ -173,13 +175,16 @@ var best_time_txt = _fmt_time_local(best_timef);
 if (new_time) best_time_txt += "  (New Record!)";
 
 // draw rows 
-tpos_y = _row_at("Best Score: ", best_pts_txt,  tpos_x, tpos_y+8, value_x);
-tpos_y = _row_at("Best Time: ",  best_time_txt, tpos_x, tpos_y+8, value_x);
+tpos_y = _row_at("Best Score: ", best_pts_txt,  tpos_x, tpos_y + 8, value_x);
+tpos_y = _row_at("Best Time: ",  best_time_txt, tpos_x, tpos_y + 8, value_x);
 
+tpos_y += lineh + 8;
 
-tpos_y += lineh+8
 // Footer hint
 draw_set_halign(fa_left);
-draw_set_colour(make_color_rgb(70, 90, 110));
+draw_set_color(make_color_rgb(70, 90, 110));
 draw_text(panel_x + pad, panel_y + panel_h - pad - lineh, "Press R to Restart |  Esc to Quit");
-draw_set_colour(c_black); // 
+
+// restore draw state
+draw_set_color(saved_col);
+draw_set_alpha(saved_alpha);

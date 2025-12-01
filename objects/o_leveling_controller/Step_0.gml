@@ -96,6 +96,8 @@ if (state == "show" && array_length(cards) == 0) {
         var r = random(1);
         var t = (r < 0.60) ? 0 : ((r < 0.90) ? 1 : 2);
         t = clamp(t, 0, max(0, array_length(e.tiers) - 1)); // safety
+        
+        if (e.id == "volatile_core") t = 2;
 
         // Create the card on the UI layer at the camera-centered position
         var pos = pos_array[j];

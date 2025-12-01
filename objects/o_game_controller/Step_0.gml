@@ -108,7 +108,7 @@ if (flare_cast) {
         var pulse_r = (variable_instance_exists(spot, "ef_radius") ? spot.ef_radius : spot.radius_px) * 3;
 
         // Stun duration 60= 1s
-        var stun_frames = 120;
+        var stun_frames = 150;
 
         // Apply to all enemies within the pulse
         with (o_EnemyParent) {
@@ -120,10 +120,7 @@ if (flare_cast) {
         }
     }
 
-    // Optional: fire a simple VFX/screen flash here (we can add later)
-    // Optional: play a whoosh SFX here
 
-    
 }
     flare_cast = false;
 

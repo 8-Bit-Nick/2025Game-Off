@@ -26,7 +26,7 @@ if (!layer_exists("LightFX")) {
 //XP / Leveling
 global.level     = 1;
 global.xp        = 0;
-global.xp_next   = 25;  // XP needed for next level 
+global.xp_next   = 40;  // XP needed for next level 
 global.leveling  = false;  // when true, show upgrade picker & pause 
 global.points = 0;
 global.survive_frames = 0;
@@ -81,13 +81,13 @@ ability_fps = 60;
 // Overcharge (Q) 
 oc_active = false; // true while Overcharge is running
 oc_time = 0; // frames remaining while active
-oc_time_max = 5 * ability_fps; // s duration
+oc_time_max = 5.5 * ability_fps; // s duration
 oc_cd = 0; // frames remaining on cooldown
 oc_cd_max = 15 * ability_fps;// s cooldown
 
 // Lens Flare (W) 
 flare_cd = 0; // frames remaining on cooldown
-flare_cd_max = 18 * ability_fps; // s cooldown
+flare_cd_max = 20 * ability_fps; // s cooldown
 flare_cast = false; // one-frame trigger
 #endregion
 

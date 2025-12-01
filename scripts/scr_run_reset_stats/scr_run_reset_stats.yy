@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_run_reset",
+  "%Name":"scr_run_reset_stats",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_run_reset",
+  "name":"scr_run_reset_stats",
   "parent":{
-    "name":"Gameplay",
-    "path":"folders/Scripts/Gameplay.yy",
+    "name":"Player",
+    "path":"folders/Scripts/Player.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

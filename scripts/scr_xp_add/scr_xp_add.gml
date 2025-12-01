@@ -23,7 +23,7 @@ function scr_xp_add(amount)
         global.run_stats.level_peak = max(global.run_stats.level_peak, global.level);
 
         // Mild non-linear growth (tweak to taste)
-        global.xp_next = round(global.xp_next * 1.15 + 2);
+        global.xp_next = round(global.xp_next * 1.10 + 5);
 
         // Signal the round controller to pause and show upgrade choices
         global.leveling = true;
