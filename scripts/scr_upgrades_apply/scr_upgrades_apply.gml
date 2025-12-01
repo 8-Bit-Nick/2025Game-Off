@@ -39,11 +39,13 @@ function scr_upgrades_apply(_id, _tier)
         if (!variable_instance_exists(spot, "blind_power_bonus")) spot.blind_power_bonus = 0.0;
         if (!variable_instance_exists(spot, "blind_linger_mult")) spot.blind_linger_mult = 1.0;
     }
-    if (instance_exists(tower)) {
-        if (!variable_instance_exists(tower, "contact_mult")) tower.contact_mult = 1.0;
-        if (!variable_instance_exists(tower, "max_hp"))       tower.max_hp       = 100;
-        if (!variable_instance_exists(tower, "hp"))           tower.hp           = tower.max_hp;
+    if (instance_exists(o_Boat_Parent)) {
+    with (o_Boat_Parent) {
+        if (!variable_instance_exists(id, "contact_mult")) contact_mult = 1.0;
+        if (!variable_instance_exists(id, "max_hp")) max_hp = 100;
+        if (!variable_instance_exists(id, "hp")) hp = max_hp;
     }
+}
 
     // Volatile Core toggle by ID
         if (entry.id == "volatile_core") {
@@ -84,23 +86,31 @@ function scr_upgrades_apply(_id, _tier)
     }
 
     // Tower durability / heal 
-    if (instance_exists(tower)) {
-        var hp_mul   = _get(eff, "tower_hp_mul", 1.0);
-        var heal_mul = _get(eff, "tower_heal_mul", 0.0);
-        var c_mul    = _get(eff, "contact_mul", 1.0);
+    // Boats durability / heal — apply to ALL boats
+if (instance_exists(o_Boat_Parent)) {
+    var hp_mul   = _get(eff, "tower_hp_mul", 1.0);
+    var heal_mul = _get(eff, "tower_heal_mul", 0.0);
+    var c_mul    = _get(eff, "contact_mul", 1.0);
+
+    with (o_Boat_Parent) {
+        // safety defaults (in case a boat spawned mid-run)
+        if (!variable_instance_exists(id, "contact_mult")) contact_mult = 1.0;
+        if (!variable_instance_exists(id, "max_hp"))       max_hp       = 100;
+        if (!variable_instance_exists(id, "hp"))           hp           = max_hp;
 
         if (hp_mul != 1.0) {
-            var old_max = tower.max_hp;
-            tower.max_hp = round(tower.max_hp * hp_mul);
-            tower.hp = round(tower.hp * (tower.max_hp / max(1, old_max)));
+            var old_max = max_hp;
+            max_hp = round(max_hp * hp_mul);
+            hp     = round(hp * (max_hp / max(1, old_max))); // preserve ratio
         }
         if (heal_mul != 0.0) {
-            tower.hp = min(tower.max_hp, tower.hp + round(tower.max_hp * heal_mul));
+            hp = min(max_hp, hp + round(max_hp * heal_mul)); // heal % of new max
         }
         if (c_mul != 1.0) {
-            tower.contact_mult *= c_mul;
+            contact_mult *= c_mul;
         }
     }
+}
 
     // Track DPS/Radius multipliers into run_stats for summary
     if (is_struct(global.run_stats)) {

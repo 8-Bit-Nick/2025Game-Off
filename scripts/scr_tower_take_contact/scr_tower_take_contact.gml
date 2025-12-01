@@ -25,10 +25,10 @@ function scr_tower_take_contact(){
     _boat.hp = max(0, _boat.hp - applied);
     // kick the flash timer on this specific boat
     if (!variable_instance_exists(_boat, "hit_flash")) _boat.hit_flash = 0;
-    _boat.hit_flash = max(_boat.hit_flash, 10); // 
+    _boat.hit_flash = max(_boat.hit_flash, 20); // 
 
     // Give brief per-boat 
-    _boat.iframes = 8; //
+    _boat.iframes = 15; //
     
     return true;
 }

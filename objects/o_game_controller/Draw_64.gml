@@ -125,20 +125,20 @@ _cd_mask(s2x1+2, s2y1+8, s2x2, s2y2-2, w_pct);
   // pull best points 
     var best_pts = (variable_global_exists("best_score") ? global.best_score : 0);
   
-  // style & draw
-    var pad = -5;
-    draw_set_halign(fa_middle);
-    draw_set_valign(fa_top);
-    draw_set_font(fnt_card_title_2)
-    draw_set_colour(c_black);
-  
-  // shadow for readability (optional)
-    var tx = gui_w - pad;
-    var ty = gui_h - pad;
-    draw_set_colour(c_dkgrey);
-    draw_text(tx-785, ty-43, "Best Time: " + mm_s + ":" + ss_s +"                      " + " Highscore: " + string(best_pts) + " pts");
-    draw_set_colour(c_aqua);
-    draw_text(tx-784, ty-42, "Best Time: " + mm_s + ":" + ss_s +"                      " + " Highscore: " + string(best_pts) + " pts");
+  //// style & draw
+    //var pad = -5;
+    //draw_set_halign(fa_middle);
+    //draw_set_valign(fa_top);
+    //draw_set_font(fnt_card_title_2)
+    //draw_set_colour(c_black);
+  //
+  //// shadow for readability 
+    //var tx = gui_w - pad;
+    //var ty = gui_h - pad;
+    //draw_set_colour(c_dkgrey);
+    //draw_text(tx-785, ty-43, "Best Time: " + mm_s + ":" + ss_s +"                      " + " Highscore: " + string(best_pts) + " pts");
+    //draw_set_colour(c_aqua);
+    //draw_text(tx-784, ty-42, "Best Time: " + mm_s + ":" + ss_s +"                      " + " Highscore: " + string(best_pts) + " pts");
 }
     #endregion
 

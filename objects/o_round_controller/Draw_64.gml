@@ -1,4 +1,4 @@
-///elapsed time HUD
+// elapsed time HUD
 // Show while playing or during level-up pause
 
 if (state == "running" || state == "levelup_pause") {

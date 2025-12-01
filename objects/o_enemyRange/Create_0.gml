@@ -6,8 +6,8 @@ enemy_radius = 26;
 // combat tuning 
 contact_damage = 10; // set by spawner
 attack_rate_frames = 135; // throw - 60=1s
-attack_cooldown = irandom_range(440, 460); // small desync on spawn
-engage_delay = irandom_range(440,460)
+attack_cooldown = irandom_range(240, 270); // small desync on spawn
+engage_delay = irandom_range(240,270)
 //throw parameters (
 throw_windup_frames = 20; // frames to “wind up” before rock spawns
 throw_timer = 0;  // counts down during a windup

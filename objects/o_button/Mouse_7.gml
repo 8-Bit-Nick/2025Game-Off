@@ -44,5 +44,10 @@ switch (button_id) {
         audio_play_sound(snd_button,1,false,0.4)
         layer_set_visible("Controls_UI",false);
         break;
+    
+    case 6:
+        layer_set_visible("Pause_Menu", false);
+        scr_run_reset_stats();
+        room_goto(rm_Main);
 	
 }
