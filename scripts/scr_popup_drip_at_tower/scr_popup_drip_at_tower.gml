@@ -6,7 +6,7 @@ function scr_popup_drip_at_tower(_amount, _is_minute)
     // Find tower
     if (instance_exists(o_Tower)) {
         var lh = instance_find(o_Tower, 0);
-        ax = lh.x;
+        ax = lh.x ;
         ay = lh.y - 155; // a bit above the lamp
     } else {
         // Fallback: top-center of current camera view (room space)
@@ -26,5 +26,5 @@ function scr_popup_drip_at_tower(_amount, _is_minute)
     var txt = "+ " + string(_amount) + "  Survival Bonus";
 
     //  Push popup 
-    scr_popup_push_gui(g.x, g.y, txt, col, 60, -0.5);
+    scr_popup_push_gui(g.x + random_range(-25,25), g.y + random_range(-25,25), txt, col, 60, -0.5);
 }

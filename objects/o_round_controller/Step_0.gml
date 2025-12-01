@@ -38,28 +38,25 @@ if (variable_global_exists("run_stats") && is_struct(global.run_stats)) {
     global.run_stats.intensity_peak = max(global.run_stats.intensity_peak, I_scaler);
 }
 #region Drip Score
-
+if(next_bonus_delay > 0){
+    next_bonus_delay -=1;
+}
 
 // Drip points & minute bonuses 
 if (elapsed_frames >= time_drip_next_frame) {
     var awards = floor((elapsed_frames - time_drip_next_frame) / time_drip_interval_frames) + 1;
-    var drip_gain =  15 * awards;
+    var drip_gain =  50 * awards;
     global.points += drip_gain;
     time_drip_next_frame += awards * time_drip_interval_frames;
     scr_popup_drip_at_tower(drip_gain, false);
 }
 var minutes_elapsed = floor(elapsed_frames / (fps_local * 60));
 while (next_bonus_minute <= minutes_elapsed) {
-    var award = 50 * power(2, next_bonus_minute - 1);
+    var award = 100 * power(2, next_bonus_minute - 1);
     global.points += award;
     next_bonus_minute += 1;
-    next_bonus_delay += 30;
-    if (next_bonus_delay > 0){
-        next_bonus_delay -=1;
-    }
-    if (next_bonus_delay = 0){
-        scr_popup_drip_at_tower(award, true);
-    }
+    scr_popup_drip_at_tower(award, true);
+    
 }
 #endregion
 // Capacity guard 
@@ -87,11 +84,11 @@ if (!at_cap && spawn_cd[0] <= 0) {
         var e = instance_create_layer(p.x, p.y, "Enemies", T.obj);
 
         // scaling: keep your shapes; allow linear tail beyond 200%
-        var hp_scaled  = round(T.hp  * (1 + 1.75 * I1_soft + 0.65 * extra));
-        var spd_scaled = T.spd * (1 + 0.22 * I1_soft + 0.1 * extra);
+        var hp_scaled  = round(T.hp  * (1 + 2.5 * I1_soft + 0.85 * extra));
+        var spd_scaled = T.spd * (1 + 0.28 * I1_soft + 0.12 * extra);
         var xp_scaled  = round(T.xp  * (1 + 0.75 * I1_soft + 0.5 * extra));
         var pt_scaled  = round(T.points * (1 + 1.5 * difficulty_01));
-        var dmg_scaled = round(T.contact_damage * dif.damage_mult);
+        var dmg_scaled = round(T.contact_damage * (dif.damage_mult * 1.25));
 
         with (e) {
             max_hp   = hp_scaled; hp = max_hp;
@@ -104,7 +101,7 @@ if (!at_cap && spawn_cd[0] <= 0) {
 
     // cooldown: taper to 0.55 by 200%; no faster beyond
     var next_seconds = T.base + random_range(-T.variance, T.variance);
-    var cadence      = lerp(1.0, 0.42, I1_soft);
+    var cadence      = lerp(1.0, 0.38, I1_soft);
     spawn_cd[0]      = max(10, round(next_seconds * cadence * fps_local));
 }
 #endregion
@@ -115,8 +112,8 @@ if (!at_cap && spawn_cd[1] <= 0) {
     var F = enemy_types[1];
 
     // your fast rule: +1 to upper bound past mid-way, capped at 200%
-    var burst_growth_fast = (I1_soft >= 0.35) ? 1 : 0;
-    var burst_f = irandom_range(F.burst_min-.5, F.burst_max + burst_growth_fast);
+    var burst_growth_fast = (I1_soft >= 0.30) ? 1 : 0;
+    var burst_f = irandom_range(F.burst_min + 1, F.burst_max + burst_growth_fast);
 
     for (var k2 = 0; k2 < burst_f; k2++) {
         if (at_cap) break;
@@ -125,8 +122,8 @@ if (!at_cap && spawn_cd[1] <= 0) {
         var p2 = scr_get_spawn_boatsafe(16, 16, 96);
         var e2 = instance_create_layer(p2.x, p2.y, "Enemies", F.obj);
 
-        var hp_scaled2  = round(F.hp  * (1 + 1 * I1_soft + 0.55 * extra));
-        var spd_scaled2 = F.spd * (1 + 0.20 * I1_soft + 0.15 * extra);
+        var hp_scaled2  = round(F.hp  * (1 + 1.5 * I1_soft + 0.65 * extra));
+        var spd_scaled2 = F.spd * (1 + 0.25 * I1_soft + 0.15 * extra);
         var xp_scaled2  = round(F.xp  * (1 + 0.75 * I1_soft + 0.5 * extra));
         var pt_scaled2  = round(F.points * (1 + 1.5 * difficulty_01));
         var dmg_scaled2 = round(F.contact_damage * (dif.damage_mult * 1.25));
@@ -161,7 +158,7 @@ if (!at_cap && spawn_cd[2] <= 0) {
         var p3 = scr_get_spawn_boatsafe(16, 16, 96);
         var e3 = instance_create_layer(p3.x, p3.y, "Enemies", R.obj);
 
-        var hp_scaled3  = round(R.hp  * (1 + 1.35 * I1_soft + 0.55 * extra));
+        var hp_scaled3  = round(R.hp  * (1 + 1.55 * I1_soft + 0.55 * extra));
         var spd_scaled3 =        R.spd * (1 + 0.25 * I1_soft + 0.15 * extra);
         var xp_scaled3  = round(R.xp  * (1 + 0.75 * I1_soft + 0.5 * extra));
         var pt_scaled3  = round(R.points * (1 + 1.75 * difficulty_01));
